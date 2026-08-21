@@ -33,3 +33,24 @@ offset_bottom = 23.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="InteractionMess" type="Label" parent="." unique_id=2111315304]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="DialogueBox" type="PanelContainer" parent="." unique_id=1662824670]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueText" type="Label" parent="DialogueBox" unique_id=1529730676]
+layout_mode = 2
+
+[node name="PauseMenu" type="Control" parent="." unique_id=1703600248]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FadeScreen" type="ColorRect" parent="." unique_id=1790388778]
+offset_right = 40.0
+offset_bottom = 40.0
