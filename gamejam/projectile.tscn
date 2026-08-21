@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dspq6epwfkphl"]
+
+[node name="Projectile" type="Area2D" unique_id=1591375976]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=729452936]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=882310662]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=726583401]
+
+[node name="LifeTimer" type="Timer" parent="." unique_id=1825942004]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1776984577]

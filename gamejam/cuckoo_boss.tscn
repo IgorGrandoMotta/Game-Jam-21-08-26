@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cudt4p5fwfam1"]
+
+[node name="CuckooBoss" type="CharacterBody2D" unique_id=990866463]
+
+[node name="Visuals" type="Node2D" parent="." unique_id=2004677770]
+
+[node name="ClockHouseSprite" type="AnimatedSprite2D" parent="Visuals" unique_id=448920569]
+
+[node name="CuckooSprite" type="AnimatedSprite2D" parent="Visuals" unique_id=1132726865]
+
+[node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1470914529]
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=129893200]
+
+[node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox" unique_id=2044448894]
+
+[node name="HealthComponent" type="Node" parent="." unique_id=853072640]
+
+[node name="ArenaTrigger" type="Area2D" parent="." unique_id=1421000580]
+
+[node name="TriggerCollision" type="CollisionShape2D" parent="ArenaTrigger" unique_id=1427688761]
+
+[node name="AttackPoints" type="Node2D" parent="." unique_id=543286324]
+
+[node name="Left" type="Marker2D" parent="AttackPoints" unique_id=1195408521]
+
+[node name="Center" type="Marker2D" parent="AttackPoints" unique_id=1247368235]
+
+[node name="Right" type="Marker2D" parent="AttackPoints" unique_id=1911852670]
+
+[node name="PhaseController" type="Node" parent="." unique_id=132819409]
+
+[node name="AttackTimer" type="Timer" parent="." unique_id=1846440300]
+
+[node name="SummonTimer" type="Timer" parent="." unique_id=1044296515]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=275636815]
+
+[node name="DeathParticles" type="GPUParticles2D" parent="." unique_id=1843447989]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=785967950]

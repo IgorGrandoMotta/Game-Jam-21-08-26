@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://qu5nkyb3qx7j"]
+
+[node name="HUD" type="CanvasLayer" unique_id=1330767384]
+
+[node name="HealthHUD" type="Control" parent="." unique_id=1486071614]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ClockFrame" type="TextureRect" parent="HealthHUD" unique_id=1410481912]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="HealthHUD" unique_id=1272971012]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BossHUD" type="Control" parent="." unique_id=1555803810]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BossName" type="Label" parent="BossHUD" unique_id=1161982485]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="BossHealthBar" type="TextureProgressBar" parent="BossHUD" unique_id=1336370671]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

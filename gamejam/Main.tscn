@@ -1,3 +1,17 @@
 [gd_scene format=3 uid="uid://d2m7sx0uqnbmc"]
 
-[node name="Node2D" type="Node2D" unique_id=1600391835]
+[node name="Main" type="Node2D" unique_id=1600391835]
+
+[node name="World" type="Node2D" parent="." unique_id=2071692323]
+
+[node name="Enemies" type="Node2D" parent="World" unique_id=478549436]
+
+[node name="Projectiles" type="Node2D" parent="World" unique_id=1357610521]
+
+[node name="Effects" type="Node2D" parent="World" unique_id=871137067]
+
+[node name="HUD" type="Node2D" parent="." unique_id=33059057]
+
+[node name="Music" type="Node2D" parent="." unique_id=605822172]
+
+[node name="Gamemanager" type="Node2D" parent="." unique_id=1731961913]

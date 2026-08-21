@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://dq0s0fwid41rr"]
+
+[node name="Level01" type="Node2D" unique_id=1764809041]
+
+[node name="Ground" type="TileMap" parent="." unique_id=2011233573]
+format = 2
+
+[node name="Wall" type="TileMap" parent="." unique_id=479260854]
+format = 2
+
+[node name="Decorations" type="TileMap" parent="." unique_id=548533274]
+format = 2
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=498596533]
+
+[node name="Props" type="Node2D" parent="." unique_id=200279063]
+
+[node name="Interactables" type="Node2D" parent="." unique_id=199971233]
+
+[node name="EnemySpawns" type="Node2D" parent="." unique_id=146258748]
+
+[node name="Spawn01" type="Marker2D" parent="EnemySpawns" unique_id=2085665844]
+
+[node name="Spawn02" type="Marker2D" parent="EnemySpawns" unique_id=2007425784]
+
+[node name="Spawn03" type="Marker2D" parent="EnemySpawns" unique_id=1608160807]
+
+[node name="BossArena" type="Node2D" parent="." unique_id=120176731]
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=669628976]
+
+[node name="LevelMusic" type="AudioStreamPlayer2D" parent="." unique_id=171870796]
