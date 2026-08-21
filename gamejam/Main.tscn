@@ -11,6 +11,7 @@
 [node name="Player" parent="World" unique_id=1342027530 instance=ExtResource("1_r0du0")]
 
 [node name="Level01" parent="World" unique_id=1764809041 instance=ExtResource("2_cm0pq")]
+visible = false
 
 [node name="Enemies" type="Node2D" parent="World" unique_id=478549436]
 
@@ -19,6 +20,7 @@
 [node name="Effects" type="Node2D" parent="World" unique_id=871137067]
 
 [node name="HUD" parent="." unique_id=1330767384 instance=ExtResource("3_fos0i")]
+visible = false
 
 [node name="Music" type="AudioStreamPlayer2D" parent="." unique_id=124464033]
 
