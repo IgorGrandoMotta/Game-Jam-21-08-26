@@ -3,13 +3,13 @@ extends EnemyBase
 
 
 @export_category("Movimento")
-@export var speed_multiplier := 1.8
+@export var speed_multiplier := 1.2
 
 @export_category("Explosão")
-@export var fuse_distance := 90.0
+@export var fuse_distance := 55.0
 @export var fuse_time := 1.2
-@export var blink_min_interval := 0.03
-@export var blink_max_interval := 0.15
+@export var blink_min_interval := 0.04
+@export var blink_max_interval := 0.22
 @export var explosion_lifetime := 0.5
 
 
@@ -67,11 +67,9 @@ func start_fuse() -> void:
 	if is_fusing:
 		return
 
-	print("CreeperBomb: pavio aceso!")
-
 	is_fusing = true
 	velocity = Vector2.ZERO
-	play_animation(get_directional_animation("idle"))
+	play_animation(get_directional_animation("boom"))
 
 	fuse_timer.start()
 	start_blink()
@@ -99,8 +97,6 @@ func explode() -> void:
 	if state == EnemyState.DEAD:
 		return
 
-	print("CreeperBomb: explode() executando")
-
 	state = EnemyState.DEAD
 	is_fusing = false
 	velocity = Vector2.ZERO
@@ -124,7 +120,6 @@ func explode() -> void:
 
 
 func _on_fuse_timer_timeout() -> void:
-	print("CreeperBomb: timer estourou, explodindo!")
 	explode()
 
 
