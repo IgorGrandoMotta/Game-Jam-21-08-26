@@ -48,7 +48,7 @@ func _ready() -> void:
 	hurt_timer.timeout.connect(_on_hurt_timer_timeout)
 
 	contact_damage_area.set("damage", contact_damage)
-
+	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	find_player()
 	sprite.play("idle")
 

@@ -1,12 +1,8 @@
 [gd_scene format=3 uid="uid://1o34a7mrecwr"]
 
 [ext_resource type="PackedScene" uid="uid://fjb35qrjv5kx" path="res://enemy_base.tscn" id="1_mykvv"]
-[ext_resource type="Texture2D" uid="uid://dq6yty8vghwtp" path="res://Imagens/bigclock_walk.png" id="2_p5exy"]
+[ext_resource type="Texture2D" uid="uid://dq6yty8vghwtp" path="res://Imagens/ENEMY1/bigclock_walk.png" id="2_p5exy"]
 [ext_resource type="Script" uid="uid://di1bd52qnamf8" path="res://damage_test.gd" id="3_hj6dr"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_orwv5"]
-atlas = ExtResource("2_p5exy")
-region = Rect2(0, 0, 44, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l233q"]
 atlas = ExtResource("2_p5exy")
@@ -31,10 +27,7 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_orwv5")
-}],
+"frames": [],
 "loop": 1,
 "name": &"idle",
 "speed": 5.0

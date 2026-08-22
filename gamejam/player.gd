@@ -62,6 +62,7 @@ var attack_tween: Tween
 var hit_targets: Array[Node] = []
 
 func _ready() -> void:
+	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	sword_animation.visible = false
 	current_health = max_health
 	sprite_rest_position = sprite.position
@@ -78,7 +79,7 @@ func _ready() -> void:
 	attack_collision.disabled = true
 	sprite.play("idle_side")
 	add_to_group("player")
-
+	
 func configure_timers() -> void:
 	dash_timer.one_shot = true
 	dash_timer.wait_time = dash_duration
@@ -173,10 +174,13 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		return
 
 	if area.has_method("get_damage"):
-		take_damage(area.get_damage())
+		take_damage(area.get_damage(), area.global_position)
 
 
-func take_damage(amount: int) -> void:
+func take_damage(
+	amount: int,
+	damage_source: Vector2
+) -> void:
 	if state == PlayerState.DEAD:
 		return
 
@@ -190,23 +194,26 @@ func take_damage(amount: int) -> void:
 		return
 
 	invulnerability_timer.start()
-	start_knockback()
+	start_knockback(damage_source)
 	play_hit_effect()
 
-
-func start_knockback() -> void:
+func start_knockback(damage_source: Vector2) -> void:
 	cancel_sword_attack()
+
 	var direction_before_hit := facing_direction
 
-	# Se tomou dano durante o dash, usa a direção do dash.
 	if state == PlayerState.DASHING:
 		direction_before_hit = dash_direction
 
 	dash_timer.stop()
 	state = PlayerState.KNOCKBACK
 
-	# Empurra para o sentido contrário.
-	knockback_direction = -direction_before_hit.normalized()
+	var away_from_damage := global_position - damage_source
+
+	if away_from_damage.length_squared() < 0.01:
+		away_from_damage = -direction_before_hit
+
+	knockback_direction = away_from_damage.normalized()
 	velocity = knockback_direction * knockback_speed
 
 	var frame_count := sprite.sprite_frames.get_frame_count("dash")
@@ -219,8 +226,11 @@ func start_knockback() -> void:
 	)
 
 	sprite.play("dash", -reverse_speed, true)
-	knockback_timer.start()
 
+	# Esta linha encerra o estado de knockback.
+	knockback_timer.stop()
+	knockback_timer.wait_time = knockback_duration
+	knockback_timer.start()
 
 func _on_knockback_timer_timeout() -> void:
 	if state == PlayerState.KNOCKBACK:
@@ -230,7 +240,6 @@ func _on_knockback_timer_timeout() -> void:
 	sprite.position = sprite_rest_position
 	sprite.rotation_degrees = 0.0
 	sprite.modulate = Color.WHITE
-
 
 func play_hit_effect() -> void:
 	if hit_tween and hit_tween.is_valid():
@@ -340,6 +349,7 @@ func play_idle_animation() -> void:
 func play_animation_if_different(animation_name: StringName) -> void:
 	if sprite.animation != animation_name:
 		sprite.play(animation_name)
+
 func start_sword_attack() -> void:
 	var attack_direction := get_global_mouse_position() - global_position
 
@@ -469,7 +479,7 @@ func check_contact_damage() -> void:
 
 	for area in hurtbox.get_overlapping_areas():
 		if area.has_method("get_damage"):
-			take_damage(area.get_damage())
+			take_damage(area.get_damage(), area.global_position)
 			break
 
 func configure_combat_layers() -> void:

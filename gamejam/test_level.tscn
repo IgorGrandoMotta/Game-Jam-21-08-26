@@ -62,3 +62,4 @@ position = Vector2(251, 178)
 shape = SubResource("RectangleShape2D_vwuui")
 
 [node name="BigClock" parent="." unique_id=489289570 instance=ExtResource("3_f7g2b")]
+position = Vector2(27, 39)
