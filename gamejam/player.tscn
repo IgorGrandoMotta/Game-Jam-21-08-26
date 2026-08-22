@@ -460,7 +460,6 @@ shape = SubResource("RectangleShape2D_hqtel")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=718731304]
 
 [node name="WeaponPivot" type="Node2D" parent="." unique_id=239584322]
-scale = Vector2(0.85, 0.85)
 
 [node name="SwordSprite" type="Sprite2D" parent="WeaponPivot" unique_id=1086038487]
 texture_filter = 1
