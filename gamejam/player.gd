@@ -169,8 +169,9 @@ func start_dash(direction: Vector2) -> void:
 	dash_direction = direction.normalized()
 	velocity = dash_direction * dash_speed
 
-	update_flip(dash_direction)
-	sprite.play("dash")
+	var dash_animation_name := get_directional_animation_name("dash", dash_direction)
+	print("Dash: direção=", dash_direction, " animação=", dash_animation_name)
+	sprite.play(dash_animation_name)
 
 	dash_timer.start()
 	dash_cooldown_timer.start()
@@ -229,8 +230,14 @@ func start_knockback(damage_source: Vector2) -> void:
 	knockback_direction = away_from_damage.normalized()
 	velocity = knockback_direction * knockback_speed
 
-	var frame_count := sprite.sprite_frames.get_frame_count("dash")
-	var animation_fps := sprite.sprite_frames.get_animation_speed("dash")
+	# Usa a animação de dash direcional correspondente à direção
+	# de antes do hit, tocada de trás pra frente pra simular o impacto.
+	var dash_animation_name := get_directional_animation_name(
+		"dash", direction_before_hit
+	)
+
+	var frame_count := sprite.sprite_frames.get_frame_count(dash_animation_name)
+	var animation_fps := sprite.sprite_frames.get_animation_speed(dash_animation_name)
 	var animation_duration := float(frame_count) / animation_fps
 
 	var reverse_speed: float = (
@@ -238,7 +245,7 @@ func start_knockback(damage_source: Vector2) -> void:
 		/ maxf(knockback_duration, 0.01)
 	)
 
-	sprite.play("dash", -reverse_speed, true)
+	sprite.play(dash_animation_name, -reverse_speed, true)
 
 	# Esta linha encerra o estado de knockback.
 	knockback_timer.stop()
@@ -315,18 +322,7 @@ func update_animation(direction: Vector2) -> void:
 		play_idle_animation()
 		return
 
-	# Prioriza a animação lateral nas diagonais.
-	if absf(direction.x) >= absf(direction.y):
-		update_flip(direction)
-		play_animation_if_different("walk_side")
-
-	elif direction.y < 0:
-		sprite.flip_h = false
-		play_animation_if_different("walk_up")
-
-	else:
-		sprite.flip_h = false
-		play_animation_if_different("walk_down")
+	sprite.play(get_directional_animation_name("walk", direction))
 
 func update_flip(direction: Vector2) -> void:
 	if direction.x != 0:
@@ -348,20 +344,26 @@ func die() -> void:
 	print("O jogador morreu!")
 	
 func play_idle_animation() -> void:
-	if absf(facing_direction.x) >= absf(facing_direction.y):
-		play_animation_if_different("idle_side")
+	sprite.play(get_directional_animation_name("idle", facing_direction))
 
-	elif facing_direction.y < 0:
+
+func get_directional_animation_name(
+	prefix: String,
+	direction: Vector2
+) -> StringName:
+	# Prioriza a animação lateral nas diagonais.
+	if absf(direction.x) >= absf(direction.y):
+		update_flip(direction)
+		return "%s_side" % prefix
+
+	elif direction.y < 0:
 		sprite.flip_h = false
-		play_animation_if_different("idle_up")
+		return "%s_up" % prefix
 
 	else:
 		sprite.flip_h = false
-		play_animation_if_different("idle_down")
+		return "%s_down" % prefix
 
-func play_animation_if_different(animation_name: StringName) -> void:
-	if sprite.animation != animation_name:
-		sprite.play(animation_name)
 
 func start_sword_attack() -> void:
 	var attack_direction := get_global_mouse_position() - global_position
@@ -511,4 +513,3 @@ func configure_combat_layers() -> void:
 	attack_area.set_collision_mask_value(5, true)
 	attack_area.monitoring = true
 	attack_area.monitorable = true
-	

@@ -291,7 +291,6 @@ func take_damage(
 		return
 
 	current_health = max(current_health - amount, 0)
-
 	print(name, ": ", current_health, "/", max_health)
 
 	play_hit_effect()

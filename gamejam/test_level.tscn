@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dc4n4onfmd37e" path="res://player.tscn" id="1_gojnm"]
 [ext_resource type="Script" uid="uid://di1bd52qnamf8" path="res://damage_test.gd" id="2_1c2mv"]
 [ext_resource type="PackedScene" uid="uid://1o34a7mrecwr" path="res://BigClock.tscn" id="3_f7g2b"]
+[ext_resource type="PackedScene" uid="uid://bb8yxhr2u2adn" path="res://BombClock.tscn" id="5_sb12i"]
+[ext_resource type="PackedScene" uid="uid://bssuyqcisut8a" path="res://death_screen.tscn" id="6_gbhdq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sb12i"]
 texture = ExtResource("1_4ptq8")
@@ -29,6 +31,7 @@ position = Vector2(320, 180)
 position = Vector2(320, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Borda" unique_id=305835103]
+position = Vector2(0, 4)
 build_mode = 1
 polygon = PackedVector2Array(-560, -128, -560, 512, 576, 512, 576, -128)
 
@@ -43,3 +46,11 @@ shape = SubResource("RectangleShape2D_vwuui")
 
 [node name="BigClock" parent="." unique_id=489289570 instance=ExtResource("3_f7g2b")]
 position = Vector2(27, 39)
+
+[node name="BoomClock" parent="." unique_id=739592306 instance=ExtResource("5_sb12i")]
+position = Vector2(659, 0)
+collision_layer = 9
+collision_mask = 3
+fuse_distance = 90.0
+
+[node name="DeathScreen" parent="." unique_id=866470627 instance=ExtResource("6_gbhdq")]

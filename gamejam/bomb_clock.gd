@@ -6,7 +6,7 @@ extends EnemyBase
 @export var speed_multiplier := 1.2
 
 @export_category("Explosão")
-@export var fuse_distance := 55.0
+@export var fuse_distance := 90.0
 @export var fuse_time := 1.2
 @export var blink_min_interval := 0.04
 @export var blink_max_interval := 0.22

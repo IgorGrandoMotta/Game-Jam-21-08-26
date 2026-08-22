@@ -130,7 +130,7 @@ func take_damage(amount: int, damage_source: Vector2) -> void:
 		return
 
 	current_health = max(current_health - amount, 0)
-	print("BigClock: ", current_health, "/", max_health)
+	print(get_script().get_global_name(), ": ", current_health, "/", max_health)
 
 	if current_health <= 0:
 		die()

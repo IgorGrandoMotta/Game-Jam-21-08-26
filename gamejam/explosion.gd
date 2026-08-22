@@ -65,6 +65,12 @@ func flash_white() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	# Evita que a explosão cause dano em quem a spawnou (o próprio
+	# CreeperBomb), já que a Area2D é filha do CharacterBody2D dele
+	# e acaba sobrepondo o próprio BodyCollision.
+	if body == owner:
+		return
+
 	if body.has_method("take_damage"):
 		# Ajuste os parâmetros aqui caso o take_damage() do seu
 		# Player tenha uma assinatura diferente
