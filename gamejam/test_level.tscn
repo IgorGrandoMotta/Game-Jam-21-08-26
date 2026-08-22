@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://8tgfdjv8mqwt"]
 
 [ext_resource type="PackedScene" uid="uid://dc4n4onfmd37e" path="res://player.tscn" id="1_gojnm"]
+[ext_resource type="Script" uid="uid://di1bd52qnamf8" path="res://damage_test.gd" id="2_1c2mv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s6i7f"]
 size = Vector2(640, 20)
@@ -13,6 +14,9 @@ size = Vector2(20, 360)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ptq8"]
 size = Vector2(20, 360)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwuui"]
+size = Vector2(80, 80)
 
 [node name="TestLevel" type="Node2D" unique_id=856062916]
 
@@ -46,3 +50,10 @@ position = Vector2(320, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallRight" unique_id=1396826351]
 position = Vector2(330, 180)
 shape = SubResource("RectangleShape2D_4ptq8")
+
+[node name="DamageTest" type="Area2D" parent="." unique_id=1854764625]
+script = ExtResource("2_1c2mv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageTest" unique_id=734857556]
+position = Vector2(251, 178)
+shape = SubResource("RectangleShape2D_vwuui")

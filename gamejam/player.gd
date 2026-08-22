@@ -1,21 +1,80 @@
 extends CharacterBody2D
 
+
+enum PlayerState {
+	NORMAL,
+	DASHING,
+	KNOCKBACK,
+	DEAD
+}
+
+
+@export_category("Movimento")
 @export var walk_speed := 80.0
+
+@export_category("Dash")
 @export var dash_speed := 240.0
 @export var dash_duration := 0.25
 @export var dash_cooldown := 0.55
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@export_category("Vida")
+@export var max_health: int = 5
+@export var invulnerability_duration := 0.8
 
-var is_dashing := false
-var can_dash := true
+@export_category("Knockback")
+@export var knockback_speed := 185.0
+@export var knockback_duration := 0.18
+@export var hit_shake_strength := 6.0
+@export var hit_rotation_strength := 18.0
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var hurtbox: Area2D = $Hurtbox
+@onready var invulnerability_timer: Timer = $InvulnerabilityTimer
+@onready var dash_timer: Timer = $DashTimer
+@onready var dash_cooldown_timer: Timer = $DashCooldownTimer
+@onready var knockback_timer: Timer = $KnockbackTimer
+
+
+signal health_changed(current_health: int, max_health: int)
+signal died
+
+
+var current_health: int
+var state: PlayerState = PlayerState.NORMAL
 
 var facing_direction := Vector2.RIGHT
 var dash_direction := Vector2.RIGHT
+var knockback_direction := Vector2.ZERO
+
+var sprite_rest_position := Vector2.ZERO
+var hit_tween: Tween
 
 
 func _ready() -> void:
+	current_health = max_health
+	sprite_rest_position = sprite.position
+
+	configure_timers()
+
+	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
+	dash_timer.timeout.connect(_on_dash_timer_timeout)
+	knockback_timer.timeout.connect(_on_knockback_timer_timeout)
+
 	sprite.play("idle")
+
+
+func configure_timers() -> void:
+	dash_timer.one_shot = true
+	dash_timer.wait_time = dash_duration
+
+	dash_cooldown_timer.one_shot = true
+	dash_cooldown_timer.wait_time = dash_cooldown
+
+	knockback_timer.one_shot = true
+	knockback_timer.wait_time = knockback_duration
+
+	invulnerability_timer.one_shot = true
+	invulnerability_timer.wait_time = invulnerability_duration
 
 
 func _physics_process(_delta: float) -> void:
@@ -26,43 +85,173 @@ func _physics_process(_delta: float) -> void:
 		"move_down"
 	)
 
-	if not is_dashing and direction != Vector2.ZERO:
-		facing_direction = direction.normalized()
+	match state:
+		PlayerState.NORMAL:
+			if direction != Vector2.ZERO:
+				facing_direction = direction.normalized()
 
-	if Input.is_action_just_pressed("dash") and can_dash:
-		var chosen_direction := direction
+			if (
+				Input.is_action_just_pressed("dash")
+				and dash_cooldown_timer.is_stopped()
+			):
+				var chosen_direction := direction
 
-		if chosen_direction == Vector2.ZERO:
-			chosen_direction = facing_direction
+				if chosen_direction == Vector2.ZERO:
+					chosen_direction = facing_direction
 
-		start_dash(chosen_direction)
+				start_dash(chosen_direction)
+			else:
+				velocity = direction * walk_speed
+				update_animation(direction)
 
-	if is_dashing:
-		velocity = dash_direction * dash_speed
-	else:
-		velocity = direction * walk_speed
-		update_animation(direction)
+		PlayerState.DASHING:
+			velocity = dash_direction * dash_speed
+
+		PlayerState.KNOCKBACK:
+			velocity = knockback_direction * knockback_speed
+
+		PlayerState.DEAD:
+			velocity = Vector2.ZERO
 
 	move_and_slide()
 
 
 func start_dash(direction: Vector2) -> void:
-	is_dashing = true
-	can_dash = false
+	state = PlayerState.DASHING
 	dash_direction = direction.normalized()
+	velocity = dash_direction * dash_speed
 
 	update_flip(dash_direction)
 	sprite.play("dash")
 
-	await get_tree().create_timer(dash_duration).timeout
-	is_dashing = false
+	dash_timer.start()
+	dash_cooldown_timer.start()
 
-	await get_tree().create_timer(
-		max(dash_cooldown - dash_duration, 0.0)
-	).timeout
 
-	can_dash = true
+func _on_dash_timer_timeout() -> void:
+	if state == PlayerState.DASHING:
+		state = PlayerState.NORMAL
+		velocity = Vector2.ZERO
 
+
+func _on_hurtbox_area_entered(area: Area2D) -> void:
+	if not invulnerability_timer.is_stopped():
+		return
+
+	if area.has_method("get_damage"):
+		take_damage(area.get_damage())
+
+
+func take_damage(amount: int) -> void:
+	if state == PlayerState.DEAD:
+		return
+
+	current_health = max(current_health - amount, 0)
+	health_changed.emit(current_health, max_health)
+
+	print("Vida: ", current_health, "/", max_health)
+
+	if current_health <= 0:
+		die()
+		return
+
+	invulnerability_timer.start()
+	start_knockback()
+	play_hit_effect()
+
+
+func start_knockback() -> void:
+	var direction_before_hit := facing_direction
+
+	# Se tomou dano durante o dash, usa a direção do dash.
+	if state == PlayerState.DASHING:
+		direction_before_hit = dash_direction
+
+	dash_timer.stop()
+	state = PlayerState.KNOCKBACK
+
+	# Empurra para o sentido contrário.
+	knockback_direction = -direction_before_hit.normalized()
+	velocity = knockback_direction * knockback_speed
+
+	var frame_count := sprite.sprite_frames.get_frame_count("dash")
+	var animation_fps := sprite.sprite_frames.get_animation_speed("dash")
+	var animation_duration := float(frame_count) / animation_fps
+
+	var reverse_speed: float = (
+		animation_duration
+		/ maxf(knockback_duration, 0.01)
+	)
+
+	sprite.play("dash", -reverse_speed, true)
+	knockback_timer.start()
+
+
+func _on_knockback_timer_timeout() -> void:
+	if state == PlayerState.KNOCKBACK:
+		state = PlayerState.NORMAL
+		velocity = Vector2.ZERO
+
+	sprite.position = sprite_rest_position
+	sprite.rotation_degrees = 0.0
+	sprite.modulate = Color.WHITE
+
+
+func play_hit_effect() -> void:
+	if hit_tween and hit_tween.is_valid():
+		hit_tween.kill()
+
+	sprite.position = sprite_rest_position
+	sprite.rotation_degrees = 0.0
+	sprite.modulate = Color(1.0, 0.15, 0.15)
+
+	hit_tween = create_tween()
+
+	var shake_steps := 6
+	var step_time := knockback_duration / float(shake_steps + 1)
+
+	for i in range(shake_steps):
+		var side := -1.0 if i % 2 == 0 else 1.0
+		var vertical_offset := 2.0 if i % 3 == 0 else -2.0
+
+		hit_tween.tween_property(
+			sprite,
+			"position",
+			sprite_rest_position + Vector2(
+				side * hit_shake_strength,
+				vertical_offset
+			),
+			step_time
+		)
+
+		hit_tween.parallel().tween_property(
+			sprite,
+			"rotation_degrees",
+			side * hit_rotation_strength,
+			step_time
+		)
+
+	hit_tween.tween_property(
+		sprite,
+		"position",
+		sprite_rest_position,
+		step_time
+	)
+
+	hit_tween.parallel().tween_property(
+		sprite,
+		"rotation_degrees",
+		0.0,
+		step_time
+	)
+
+	var color_tween := create_tween()
+	color_tween.tween_property(
+		sprite,
+		"modulate",
+		Color.WHITE,
+		knockback_duration
+	)
 
 func update_animation(direction: Vector2) -> void:
 	if direction == Vector2.ZERO:
@@ -78,3 +267,18 @@ func update_animation(direction: Vector2) -> void:
 func update_flip(direction: Vector2) -> void:
 	if direction.x != 0:
 		sprite.flip_h = direction.x > 0
+
+
+func die() -> void:
+	state = PlayerState.DEAD
+	velocity = Vector2.ZERO
+
+	dash_timer.stop()
+	knockback_timer.stop()
+
+	hurtbox.set_deferred("monitoring", false)
+	sprite.modulate = Color(0.35, 0.35, 0.35)
+
+	died.emit()
+	print("O jogador morreu!")
+	

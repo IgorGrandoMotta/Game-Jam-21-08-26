@@ -173,9 +173,16 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
 size = Vector2(45, 39)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
+size = Vector2(48, 45)
+
 [node name="Player" type="CharacterBody2D" unique_id=1342027530]
 script = ExtResource("1_hqtel")
-dash_duration = 0.5
+walk_speed = 200.0
+dash_speed = 400.0
+dash_duration = 0.35
+knockback_speed = 300.0
+knockback_duration = 0.3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=722535574]
 texture_filter = 1
@@ -202,6 +209,8 @@ shape = SubResource("RectangleShape2D_hqtel")
 [node name="Hurtbox" type="Area2D" parent="." unique_id=421400338]
 
 [node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox" unique_id=670225877]
+position = Vector2(0, 1.5)
+shape = SubResource("RectangleShape2D_r0du0")
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=932055744]
 
@@ -214,5 +223,13 @@ shape = SubResource("RectangleShape2D_hqtel")
 [node name="AttackCooldown" type="Timer" parent="." unique_id=1574399399]
 
 [node name="InvulnerabilityTimer" type="Timer" parent="." unique_id=1266472507]
+wait_time = 0.8
+one_shot = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=1371114449]
+
+[node name="DashTimer" type="Timer" parent="." unique_id=644117123]
+
+[node name="DashCooldownTimer" type="Timer" parent="." unique_id=572240449]
+
+[node name="KnockbackTimer" type="Timer" parent="." unique_id=1529833789]
