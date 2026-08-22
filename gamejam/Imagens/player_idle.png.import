@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bik2naatp3pmd"
-path="res://.godot/imported/walkh_player.png-a261aebb710d57acca9820f67b4bfca1.ctex"
+uid="uid://b4dki1mlynov2"
+path="res://.godot/imported/player_idle.png-8f26786429f18bf02817b7d888ff8608.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Imagens/walkh_player.png"
-dest_files=["res://.godot/imported/walkh_player.png-a261aebb710d57acca9820f67b4bfca1.ctex"]
+source_file="res://Imagens/player_idle.png"
+dest_files=["res://.godot/imported/player_idle.png-8f26786429f18bf02817b7d888ff8608.ctex"]
 
 [params]
 

@@ -60,7 +60,7 @@ func _ready() -> void:
 	dash_timer.timeout.connect(_on_dash_timer_timeout)
 	knockback_timer.timeout.connect(_on_knockback_timer_timeout)
 
-	sprite.play("idle")
+	sprite.play("idle_side")
 
 
 func configure_timers() -> void:
@@ -255,14 +255,21 @@ func play_hit_effect() -> void:
 
 func update_animation(direction: Vector2) -> void:
 	if direction == Vector2.ZERO:
-		if sprite.animation != "idle":
-			sprite.play("idle")
-	else:
+		play_idle_animation()
+		return
+
+	# Prioriza a animação lateral nas diagonais.
+	if absf(direction.x) >= absf(direction.y):
 		update_flip(direction)
+		play_animation_if_different("walk_side")
 
-		if sprite.animation != "walk":
-			sprite.play("walk")
+	elif direction.y < 0:
+		sprite.flip_h = false
+		play_animation_if_different("walk_up")
 
+	else:
+		sprite.flip_h = false
+		play_animation_if_different("walk_down")
 
 func update_flip(direction: Vector2) -> void:
 	if direction.x != 0:
@@ -282,3 +289,18 @@ func die() -> void:
 	died.emit()
 	print("O jogador morreu!")
 	
+func play_idle_animation() -> void:
+	if absf(facing_direction.x) >= absf(facing_direction.y):
+		play_animation_if_different("idle_side")
+
+	elif facing_direction.y < 0:
+		sprite.flip_h = false
+		play_animation_if_different("idle_up")
+
+	else:
+		sprite.flip_h = false
+		play_animation_if_different("idle_down")
+
+func play_animation_if_different(animation_name: StringName) -> void:
+	if sprite.animation != animation_name:
+		sprite.play(animation_name)

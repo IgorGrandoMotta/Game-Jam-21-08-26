@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfm1ijd4tqc3p"
-path="res://.godot/imported/idleh_player.png-a77b8c6504593814ff54efeecbb49a61.ctex"
+uid="uid://cqk7naq5s0mc2"
+path="res://.godot/imported/sword.png-62c1108cc2f9ecb30a4546bcef21f821.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Imagens/idleh_player.png"
-dest_files=["res://.godot/imported/idleh_player.png-a77b8c6504593814ff54efeecbb49a61.ctex"]
+source_file="res://Imagens/sword.png"
+dest_files=["res://.godot/imported/sword.png-62c1108cc2f9ecb30a4546bcef21f821.ctex"]
 
 [params]
 
