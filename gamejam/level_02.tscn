@@ -51,6 +51,8 @@ layer_0/tile_data = PackedInt32Array(-1441835, 2, 0, -1376299, 2, 1, -1310763, 2
 
 [node name="Player" parent="." unique_id=1342027530 instance=ExtResource("3_ucrpc")]
 position = Vector2(73, 85)
+collision_layer = 9
+collision_mask = 3
 
 [node name="BordaDoMundo" type="StaticBody2D" parent="." unique_id=860849786]
 
@@ -61,3 +63,6 @@ build_mode = 1
 polygon = PackedVector2Array(-787.95776, -367.9761, -787.95776, 644.7628, 1064.992, 644.7628, 1064.992, -367.9761)
 
 [node name="BoomClock" parent="." unique_id=489289570 instance=ExtResource("5_ucrpc")]
+position = Vector2(-263, 73)
+collision_layer = 9
+collision_mask = 3
