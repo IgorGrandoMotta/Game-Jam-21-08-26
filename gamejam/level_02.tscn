@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://8q171van4g3f" path="res://Imagens/Chao_de_taco_medio.png" id="3_rqd2m"]
 [ext_resource type="Texture2D" uid="uid://cirtdrpk8prd1" path="res://Imagens/converted_image.png" id="3_scvo5"]
 [ext_resource type="PackedScene" uid="uid://dc4n4onfmd37e" path="res://player.tscn" id="3_ucrpc"]
-[ext_resource type="Texture2D" uid="uid://c5lg4rsm1qvht" path="res://Imagens/ENEMY2/spr_enemy2_idledown.png" id="5_ucrpc"]
+[ext_resource type="PackedScene" uid="uid://bb8yxhr2u2adn" path="res://BombClock.tscn" id="5_ucrpc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_scvo5"]
 texture = ExtResource("1_rqd2m")
@@ -41,17 +41,6 @@ sources/0 = SubResource("TileSetAtlasSource_scvo5")
 sources/1 = SubResource("TileSetAtlasSource_ucrpc")
 sources/2 = SubResource("TileSetAtlasSource_57nq5")
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_riqys"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("5_ucrpc")
-}],
-"loop": 1,
-"name": &"new_animation",
-"speed": 5.0
-}]
-
 [node name="Level 02" type="Node2D" unique_id=218062758]
 
 [node name="Ground" type="TileMap" parent="." unique_id=1786235113]
@@ -71,8 +60,4 @@ scale = Vector2(0.8807578, 0.93212575)
 build_mode = 1
 polygon = PackedVector2Array(-787.95776, -367.9761, -787.95776, 644.7628, 1064.992, 644.7628, 1064.992, -367.9761)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=253445126]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=541007083]
-sprite_frames = SubResource("SpriteFrames_riqys")
-animation = &"new_animation"
+[node name="BoomClock" parent="." unique_id=489289570 instance=ExtResource("5_ucrpc")]

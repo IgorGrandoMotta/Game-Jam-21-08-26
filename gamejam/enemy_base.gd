@@ -11,7 +11,7 @@ enum EnemyState {
 
 
 @export_category("Movimento")
-@export var move_speed := 45.0
+@export var move_speed := 5.0
 @export var detection_range := 260.0
 @export var stop_distance := 58.0
 
@@ -38,6 +38,7 @@ var current_health: int
 var state: EnemyState = EnemyState.IDLE
 var target: Node2D
 var knockback_velocity := Vector2.ZERO
+var facing_direction := Vector2.DOWN
 
 
 func _ready() -> void:
@@ -50,7 +51,7 @@ func _ready() -> void:
 	contact_damage_area.set("damage", contact_damage)
 
 	find_player()
-	sprite.play("idle")
+	play_animation("idle_down")
 
 
 func _physics_process(delta: float) -> void:
@@ -90,13 +91,13 @@ func update_chase() -> void:
 	if distance_to_player > detection_range:
 		state = EnemyState.IDLE
 		velocity = Vector2.ZERO
-		play_animation("idle")
+		play_animation(get_directional_animation("idle"))
 		return
 
 	if distance_to_player <= stop_distance:
 		state = EnemyState.IDLE
 		velocity = Vector2.ZERO
-		play_animation("idle")
+		play_animation(get_directional_animation("idle"))
 		return
 
 	state = EnemyState.CHASE
@@ -106,11 +107,22 @@ func update_chase() -> void:
 	)
 
 	velocity = direction * move_speed
+	facing_direction = direction
 
-	if direction.x != 0:
-		sprite.flip_h = direction.x < 0
+	play_animation(get_directional_animation("walk"))
 
-	play_animation("walk")
+
+func get_directional_animation(prefix: String) -> StringName:
+	# Decide se o movimento é mais horizontal ou vertical
+	if abs(facing_direction.x) > abs(facing_direction.y):
+		sprite.flip_h = facing_direction.x > 0
+		return "%s_side" % prefix
+	else:
+		sprite.flip_h = false
+		if facing_direction.y < 0:
+			return "%s_up" % prefix
+		else:
+			return "%s_down" % prefix
 
 
 func take_damage(amount: int, damage_source: Vector2) -> void:
