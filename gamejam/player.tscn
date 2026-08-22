@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://cr6ukfcwmavli" path="res://Imagens/player_idle_up.png" id="5_b26j0"]
 [ext_resource type="Texture2D" uid="uid://8d3dbpt2y8wf" path="res://Imagens/player_walk_down.png" id="7_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://3558wl4k2poo" path="res://Imagens/player_walk_up.png" id="8_nvl01"]
+[ext_resource type="Texture2D" uid="uid://cqk7naq5s0mc2" path="res://Imagens/sword.png" id="9_b26j0"]
+[ext_resource type="Texture2D" uid="uid://bty25iqt1ql70" path="res://Imagens/sword_attack.png" id="10_n7ghd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2hs0m"]
 atlas = ExtResource("1_i3pqv")
@@ -365,8 +367,72 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
 size = Vector2(45, 39)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_oybyf"]
+atlas = ExtResource("10_n7ghd")
+region = Rect2(0, 0, 22, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajfva"]
+atlas = ExtResource("10_n7ghd")
+region = Rect2(22, 0, 22, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ef02"]
+atlas = ExtResource("10_n7ghd")
+region = Rect2(44, 0, 22, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfmca"]
+atlas = ExtResource("10_n7ghd")
+region = Rect2(66, 0, 22, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76oay"]
+atlas = ExtResource("10_n7ghd")
+region = Rect2(88, 0, 22, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4uyv"]
+atlas = ExtResource("10_n7ghd")
+region = Rect2(110, 0, 22, 17)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tw8ou"]
+atlas = ExtResource("10_n7ghd")
+region = Rect2(132, 0, 22, 17)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s6i7f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oybyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajfva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ef02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfmca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76oay")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4uyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tw8ou")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b26j0"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
-size = Vector2(48, 45)
+size = Vector2(51, 15)
 
 [node name="Player" type="CharacterBody2D" unique_id=1342027530]
 script = ExtResource("1_hqtel")
@@ -375,12 +441,16 @@ dash_speed = 400.0
 dash_duration = 0.35
 knockback_speed = 300.0
 knockback_duration = 0.3
+attack_duration = 0.25
+attack_cooldown = 0.25
+attack_arc_degrees = 100.0
+attack_move_multiplier = 0.5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=722535574]
 texture_filter = 1
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_r0du0")
-animation = &"idle_side"
+animation = &"dash"
 
 [node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1109739762]
 position = Vector2(-0.5, 2.5)
@@ -390,18 +460,32 @@ shape = SubResource("RectangleShape2D_hqtel")
 
 [node name="WeaponPivot" type="Node2D" parent="." unique_id=239584322]
 
-[node name="Sprite2D" type="Sprite2D" parent="WeaponPivot" unique_id=1086038487]
+[node name="SwordSprite" type="Sprite2D" parent="WeaponPivot" unique_id=1086038487]
+texture_filter = 1
+position = Vector2(70, 0)
+rotation = 1.5707964
+scale = Vector2(3, 3)
+texture = ExtResource("9_b26j0")
+
+[node name="SwordAnimation" type="AnimatedSprite2D" parent="WeaponPivot" unique_id=76940920]
+texture_filter = 1
+position = Vector2(70, 0)
+rotation = 1.5707964
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_s6i7f")
+animation = &"attack"
 
 [node name="AttackArea" type="Area2D" parent="WeaponPivot" unique_id=1697728474]
 
 [node name="AttackCollision" type="CollisionShape2D" parent="WeaponPivot/AttackArea" unique_id=334307812]
+shape = SubResource("RectangleShape2D_b26j0")
 
 [node name="ProjectileSpawn" type="Marker2D" parent="WeaponPivot" unique_id=786163838]
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=421400338]
 
 [node name="HurtboxCollision" type="CollisionShape2D" parent="Hurtbox" unique_id=670225877]
-position = Vector2(0, 1.5)
+position = Vector2(70, 0)
 shape = SubResource("RectangleShape2D_r0du0")
 
 [node name="InteractionArea" type="Area2D" parent="." unique_id=932055744]

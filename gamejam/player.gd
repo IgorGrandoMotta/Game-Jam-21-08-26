@@ -5,27 +5,31 @@ enum PlayerState {
 	NORMAL,
 	DASHING,
 	KNOCKBACK,
+	ATTACKING,
 	DEAD
 }
 
 
 @export_category("Movimento")
 @export var walk_speed := 80.0
-
 @export_category("Dash")
 @export var dash_speed := 240.0
 @export var dash_duration := 0.25
 @export var dash_cooldown := 0.55
-
 @export_category("Vida")
 @export var max_health: int = 5
 @export var invulnerability_duration := 0.8
-
 @export_category("Knockback")
 @export var knockback_speed := 185.0
 @export var knockback_duration := 0.18
 @export var hit_shake_strength := 6.0
 @export var hit_rotation_strength := 18.0
+@export_category("Espada")
+@export var sword_damage: int = 1
+@export var attack_duration := 0.22
+@export var attack_cooldown := 0.40
+@export var attack_arc_degrees := 200.0
+@export var attack_move_multiplier := 0.35
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hurtbox: Area2D = $Hurtbox
@@ -33,7 +37,12 @@ enum PlayerState {
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
 @onready var knockback_timer: Timer = $KnockbackTimer
-
+@onready var weapon_pivot: Node2D = $WeaponPivot
+@onready var sword_sprite: Sprite2D = $WeaponPivot/SwordSprite
+@onready var attack_area: Area2D = $WeaponPivot/AttackArea
+@onready var attack_collision: CollisionShape2D = $WeaponPivot/AttackArea/AttackCollision
+@onready var attack_cooldown_timer: Timer = $AttackCooldown
+@onready var sword_animation: AnimatedSprite2D = $WeaponPivot/SwordAnimation
 
 signal health_changed(current_health: int, max_health: int)
 signal died
@@ -49,8 +58,11 @@ var knockback_direction := Vector2.ZERO
 var sprite_rest_position := Vector2.ZERO
 var hit_tween: Tween
 
+var attack_tween: Tween
+var hit_targets: Array[Area2D] = []
 
 func _ready() -> void:
+	sword_animation.visible = false
 	current_health = max_health
 	sprite_rest_position = sprite.position
 
@@ -59,7 +71,10 @@ func _ready() -> void:
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
 	dash_timer.timeout.connect(_on_dash_timer_timeout)
 	knockback_timer.timeout.connect(_on_knockback_timer_timeout)
+	attack_area.area_entered.connect(_on_attack_area_entered)
 
+	sword_sprite.visible = true
+	attack_collision.disabled = true
 	sprite.play("idle_side")
 
 
@@ -75,7 +90,8 @@ func configure_timers() -> void:
 
 	invulnerability_timer.one_shot = true
 	invulnerability_timer.wait_time = invulnerability_duration
-
+	attack_cooldown_timer.one_shot = true
+	attack_cooldown_timer.wait_time = attack_cooldown
 
 func _physics_process(_delta: float) -> void:
 	var direction := Input.get_vector(
@@ -84,13 +100,24 @@ func _physics_process(_delta: float) -> void:
 		"move_up",
 		"move_down"
 	)
-
+	if (
+		state != PlayerState.ATTACKING
+		and state != PlayerState.DEAD
+	):
+		update_weapon_aim()
+		
 	match state:
 		PlayerState.NORMAL:
 			if direction != Vector2.ZERO:
 				facing_direction = direction.normalized()
 
 			if (
+				Input.is_action_just_pressed("attack")
+				and attack_cooldown_timer.is_stopped()
+			):
+				start_sword_attack()
+
+			elif (
 				Input.is_action_just_pressed("dash")
 				and dash_cooldown_timer.is_stopped()
 			):
@@ -100,6 +127,7 @@ func _physics_process(_delta: float) -> void:
 					chosen_direction = facing_direction
 
 				start_dash(chosen_direction)
+
 			else:
 				velocity = direction * walk_speed
 				update_animation(direction)
@@ -109,7 +137,11 @@ func _physics_process(_delta: float) -> void:
 
 		PlayerState.KNOCKBACK:
 			velocity = knockback_direction * knockback_speed
-
+			
+		PlayerState.ATTACKING:
+			velocity = direction * walk_speed * attack_move_multiplier
+			update_animation(direction)
+			
 		PlayerState.DEAD:
 			velocity = Vector2.ZERO
 
@@ -161,6 +193,7 @@ func take_damage(amount: int) -> void:
 
 
 func start_knockback() -> void:
+	cancel_sword_attack()
 	var direction_before_hit := facing_direction
 
 	# Se tomou dano durante o dash, usa a direção do dash.
@@ -277,6 +310,7 @@ func update_flip(direction: Vector2) -> void:
 
 
 func die() -> void:
+	cancel_sword_attack()
 	state = PlayerState.DEAD
 	velocity = Vector2.ZERO
 
@@ -304,3 +338,115 @@ func play_idle_animation() -> void:
 func play_animation_if_different(animation_name: StringName) -> void:
 	if sprite.animation != animation_name:
 		sprite.play(animation_name)
+func start_sword_attack() -> void:
+	var attack_direction := get_global_mouse_position() - global_position
+
+	if attack_direction.length_squared() < 0.01:
+		attack_direction = facing_direction
+
+	attack_direction = attack_direction.normalized()
+
+	var target_angle := attack_direction.angle()
+	var half_arc := deg_to_rad(attack_arc_degrees * 0.5)
+	var attack_on_right := attack_direction.x >= 0.0
+	var swing_direction := 1.0 if attack_on_right else -1.0
+
+	# Espelha o efeito para o rastro continuar atrás da lâmina.
+	sword_animation.flip_h = attack_on_right
+
+	var start_angle := target_angle - half_arc * swing_direction
+	var end_angle := target_angle + half_arc * swing_direction
+	
+	state = PlayerState.ATTACKING
+	hit_targets.clear()
+
+	if attack_tween and attack_tween.is_valid():
+		attack_tween.kill()
+
+	weapon_pivot.rotation = start_angle
+	sword_sprite.visible = false
+	sword_animation.visible = true
+
+	var frame_count := sword_animation.sprite_frames.get_frame_count("attack")
+	var animation_fps := sword_animation.sprite_frames.get_animation_speed("attack")
+	var animation_duration := float(frame_count) / animation_fps
+
+	var animation_speed: float = (
+		animation_duration
+		/ maxf(attack_duration, 0.01)
+	)
+
+	sword_animation.stop()
+	sword_animation.play("attack", animation_speed)
+
+	attack_collision.set_deferred("disabled", false)
+
+	attack_cooldown_timer.start()
+
+	attack_tween = create_tween()
+
+	attack_tween.tween_property(
+		weapon_pivot,
+		"rotation",
+		end_angle,
+		attack_duration
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+	attack_tween.finished.connect(finish_sword_attack)
+
+
+func finish_sword_attack() -> void:
+	sword_sprite.visible = true
+	sword_animation.stop()
+	sword_animation.visible = false
+	sword_sprite.visible = true
+	attack_collision.set_deferred("disabled", true)
+	hit_targets.clear()
+
+	if state == PlayerState.ATTACKING:
+		state = PlayerState.NORMAL
+
+
+func cancel_sword_attack() -> void:
+	if attack_tween and attack_tween.is_valid():
+		attack_tween.kill()
+
+	sword_sprite.visible = true
+	sword_animation.stop()
+	sword_animation.visible = false
+
+	attack_collision.set_deferred("disabled", true)
+	hit_targets.clear()
+
+func _on_attack_area_entered(area: Area2D) -> void:
+	if state != PlayerState.ATTACKING:
+		return
+
+	if area in hit_targets:
+		return
+
+	var target := area.get_parent()
+
+	# Impede que a espada acerte o próprio jogador.
+	if target == self:
+		return
+
+	if target.has_method("take_damage"):
+		hit_targets.append(area)
+		target.take_damage(sword_damage, global_position)
+
+func update_weapon_aim() -> void:
+	var mouse_direction := get_global_mouse_position() - global_position
+
+	if mouse_direction.length_squared() < 0.01:
+		return
+
+	weapon_pivot.rotation = mouse_direction.angle()
+
+	# Atrás do personagem quando aponta para cima;
+	# na frente quando aponta para baixo.
+	if mouse_direction.y < 0:
+		weapon_pivot.z_index = -1
+	else:
+		weapon_pivot.z_index = 1
+		
