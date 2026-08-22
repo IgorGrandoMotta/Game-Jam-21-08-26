@@ -67,9 +67,10 @@ size = Vector2(50, 72)
 size = Vector2(49, 72)
 
 [node name="BigClock" unique_id=489289570 instance=ExtResource("1_mykvv")]
-move_speed = 80.0
+move_speed = 130.0
 detection_range = 350.0
 stop_distance = 40.0
+max_health = 10
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1048036837]
 texture_filter = 1
