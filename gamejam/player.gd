@@ -456,7 +456,7 @@ func update_weapon_aim() -> void:
 	# Atrás do personagem quando aponta para cima;
 	# na frente quando aponta para baixo.
 	if mouse_direction.y < 0:
-		weapon_pivot.z_index = -1
+		weapon_pivot.z_index = 1
 	else:
 		weapon_pivot.z_index = 1
 
