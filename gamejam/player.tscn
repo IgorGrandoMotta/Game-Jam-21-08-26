@@ -225,6 +225,16 @@ animations = [{
 "name": &"dash",
 "speed": 72.0
 }, {
+"frames": [],
+"loop": 1,
+"name": &"dash down",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": 1,
+"name": &"dash up",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qtqh7")
@@ -451,7 +461,7 @@ attack_move_multiplier = 0.5
 texture_filter = 1
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_r0du0")
-animation = &"dash"
+animation = &"dash down"
 
 [node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1109739762]
 position = Vector2(1, 18)
