@@ -6,12 +6,12 @@ enum EnemyState {
 	IDLE,
 	CHASE,
 	HURT,
+	ATTACKING,
 	DEAD
 }
 
-
 @export_category("Movimento")
-@export var move_speed := 5.0
+@export var move_speed := 45.0
 @export var detection_range := 260.0
 @export var stop_distance := 58.0
 
@@ -51,7 +51,6 @@ func _ready() -> void:
 	contact_damage_area.set("damage", contact_damage)
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	find_player()
-	play_animation("idle_down")
 
 
 func _physics_process(delta: float) -> void:
@@ -68,14 +67,15 @@ func _physics_process(delta: float) -> void:
 	match state:
 		EnemyState.IDLE, EnemyState.CHASE:
 			update_chase()
-
+		
 		EnemyState.HURT:
 			velocity = knockback_velocity
 			knockback_velocity = knockback_velocity.move_toward(
 				Vector2.ZERO,
 				700.0 * delta
 			)
-
+		EnemyState.ATTACKING:
+			velocity = Vector2.ZERO
 	move_and_slide()
 
 
@@ -135,7 +135,7 @@ func take_damage(amount: int, damage_source: Vector2) -> void:
 	if current_health <= 0:
 		die()
 		return
-
+	cancel_attack()
 	state = EnemyState.HURT
 
 	var knockback_direction := (
@@ -172,6 +172,7 @@ func play_animation(animation_name: StringName) -> void:
 
 
 func die() -> void:
+	cancel_attack()
 	state = EnemyState.DEAD
 	velocity = Vector2.ZERO
 
@@ -189,3 +190,6 @@ func die() -> void:
 	).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 
 	tween.finished.connect(queue_free)
+	
+func cancel_attack() -> void:
+	pass
