@@ -365,7 +365,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqtel"]
-size = Vector2(45, 39)
+size = Vector2(46, 13)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_oybyf"]
 atlas = ExtResource("10_n7ghd")
@@ -433,7 +433,7 @@ animations = [{
 size = Vector2(51, 15)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r0du0"]
-size = Vector2(48, 45)
+size = Vector2(50, 49)
 
 [node name="Player" type="CharacterBody2D" unique_id=1342027530]
 script = ExtResource("1_hqtel")
@@ -454,7 +454,7 @@ sprite_frames = SubResource("SpriteFrames_r0du0")
 animation = &"dash"
 
 [node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1109739762]
-position = Vector2(-0.5, 2.5)
+position = Vector2(1, 18)
 shape = SubResource("RectangleShape2D_hqtel")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=718731304]

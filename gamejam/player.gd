@@ -66,6 +66,7 @@ func _ready() -> void:
 	current_health = max_health
 	sprite_rest_position = sprite.position
 	
+	configure_combat_layers()
 	configure_timers()
 
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
@@ -470,3 +471,21 @@ func check_contact_damage() -> void:
 		if area.has_method("get_damage"):
 			take_damage(area.get_damage())
 			break
+
+func configure_combat_layers() -> void:
+	# Hurtbox do jogador: camada 2, detecta dano na camada 4.
+	hurtbox.collision_layer = 0
+	hurtbox.collision_mask = 0
+	hurtbox.set_collision_layer_value(2, true)
+	hurtbox.set_collision_mask_value(4, true)
+	hurtbox.monitoring = true
+	hurtbox.monitorable = true
+
+	# Espada: camada 3, detecta Hurtbox inimiga na camada 5.
+	attack_area.collision_layer = 0
+	attack_area.collision_mask = 0
+	attack_area.set_collision_layer_value(3, true)
+	attack_area.set_collision_mask_value(5, true)
+	attack_area.monitoring = true
+	attack_area.monitorable = true
+	

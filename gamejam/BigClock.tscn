@@ -58,15 +58,18 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p5exy"]
-size = Vector2(50, 28)
+size = Vector2(45, 31)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_orwv5"]
-size = Vector2(60, 70)
+size = Vector2(50, 72)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hj6dr"]
-size = Vector2(70, 84)
+size = Vector2(49, 72)
 
 [node name="BigClock" unique_id=489289570 instance=ExtResource("1_mykvv")]
+move_speed = 80.0
+detection_range = 350.0
+stop_distance = 40.0
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1048036837]
 texture_filter = 1
@@ -75,7 +78,7 @@ sprite_frames = SubResource("SpriteFrames_n123s")
 animation = &"idle"
 
 [node name="BodyCollision" parent="." index="1" unique_id=1316882867]
-position = Vector2(0, 25)
+position = Vector2(-0.5, 26.5)
 shape = SubResource("RectangleShape2D_p5exy")
 
 [node name="ContactDamage" parent="." index="4" unique_id=1156693466]
@@ -84,6 +87,7 @@ collision_mask = 2
 script = ExtResource("3_hj6dr")
 
 [node name="DamageCollision" parent="ContactDamage" index="0" unique_id=1882333580]
+position = Vector2(-1, 8)
 shape = SubResource("RectangleShape2D_orwv5")
 
 [node name="Hurtbox" parent="." index="5" unique_id=1162032235]
@@ -91,4 +95,5 @@ collision_layer = 16
 collision_mask = 4
 
 [node name="HurtboxCollision" parent="Hurtbox" index="0" unique_id=762187009]
+position = Vector2(-1.5, 8)
 shape = SubResource("RectangleShape2D_hj6dr")
