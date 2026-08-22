@@ -107,7 +107,7 @@ func _physics_process(_delta: float) -> void:
 		and state != PlayerState.DEAD
 	):
 		update_weapon_aim()
-		
+
 	match state:
 		PlayerState.NORMAL:
 			if direction != Vector2.ZERO:
@@ -139,12 +139,25 @@ func _physics_process(_delta: float) -> void:
 
 		PlayerState.KNOCKBACK:
 			velocity = knockback_direction * knockback_speed
-			
+
 		PlayerState.ATTACKING:
-			velocity = direction * walk_speed * attack_move_multiplier
-			update_animation(direction)
-			check_sword_hits()
-			
+			if (
+				Input.is_action_just_pressed("dash")
+				and dash_cooldown_timer.is_stopped()
+			):
+				var chosen_direction := direction
+
+				if chosen_direction == Vector2.ZERO:
+					chosen_direction = facing_direction
+
+				cancel_sword_attack()
+				start_dash(chosen_direction)
+
+			else:
+				velocity = direction * walk_speed * attack_move_multiplier
+				update_animation(direction)
+				check_sword_hits()
+
 		PlayerState.DEAD:
 			velocity = Vector2.ZERO
 

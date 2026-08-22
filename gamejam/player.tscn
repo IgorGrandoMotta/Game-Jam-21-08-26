@@ -437,9 +437,9 @@ size = Vector2(50, 49)
 
 [node name="Player" type="CharacterBody2D" unique_id=1342027530]
 script = ExtResource("1_hqtel")
-walk_speed = 200.0
-dash_speed = 400.0
-dash_duration = 0.35
+walk_speed = 240.0
+dash_speed = 480.0
+dash_cooldown = 0.45
 knockback_speed = 300.0
 knockback_duration = 0.3
 attack_duration = 0.25
