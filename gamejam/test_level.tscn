@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dc4n4onfmd37e" path="res://player.tscn" id="1_gojnm"]
 [ext_resource type="Script" uid="uid://di1bd52qnamf8" path="res://damage_test.gd" id="2_1c2mv"]
+[ext_resource type="PackedScene" uid="uid://1o34a7mrecwr" path="res://BigClock.tscn" id="3_f7g2b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s6i7f"]
 size = Vector2(640, 20)
@@ -52,8 +53,12 @@ position = Vector2(330, 180)
 shape = SubResource("RectangleShape2D_4ptq8")
 
 [node name="DamageTest" type="Area2D" parent="." unique_id=1854764625]
+visible = false
 script = ExtResource("2_1c2mv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageTest" unique_id=734857556]
+visible = false
 position = Vector2(251, 178)
 shape = SubResource("RectangleShape2D_vwuui")
+
+[node name="BigClock" parent="." unique_id=489289570 instance=ExtResource("3_f7g2b")]

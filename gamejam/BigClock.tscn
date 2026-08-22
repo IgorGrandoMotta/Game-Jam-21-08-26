@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://1o34a7mrecwr"]
+
+[ext_resource type="PackedScene" uid="uid://fjb35qrjv5kx" path="res://enemy_base.tscn" id="1_mykvv"]
+[ext_resource type="Texture2D" uid="uid://dq6yty8vghwtp" path="res://Imagens/bigclock_walk.png" id="2_p5exy"]
+[ext_resource type="Script" uid="uid://di1bd52qnamf8" path="res://damage_test.gd" id="3_hj6dr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orwv5"]
+atlas = ExtResource("2_p5exy")
+region = Rect2(0, 0, 44, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l233q"]
+atlas = ExtResource("2_p5exy")
+region = Rect2(0, 0, 44, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b1gxk"]
+atlas = ExtResource("2_p5exy")
+region = Rect2(44, 0, 44, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxpq2"]
+atlas = ExtResource("2_p5exy")
+region = Rect2(88, 0, 44, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pkcg"]
+atlas = ExtResource("2_p5exy")
+region = Rect2(132, 0, 44, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n123s"]
+animations = [{
+"frames": [],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orwv5")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l233q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b1gxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxpq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5pkcg")
+}],
+"loop": 1,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p5exy"]
+size = Vector2(50, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_orwv5"]
+size = Vector2(60, 70)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hj6dr"]
+size = Vector2(70, 84)
+
+[node name="BigClock" unique_id=489289570 instance=ExtResource("1_mykvv")]
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1048036837]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_n123s")
+animation = &"idle"
+
+[node name="BodyCollision" parent="." index="1" unique_id=1316882867]
+position = Vector2(0, 25)
+shape = SubResource("RectangleShape2D_p5exy")
+
+[node name="ContactDamage" parent="." index="4" unique_id=1156693466]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("3_hj6dr")
+
+[node name="DamageCollision" parent="ContactDamage" index="0" unique_id=1882333580]
+shape = SubResource("RectangleShape2D_orwv5")
+
+[node name="Hurtbox" parent="." index="5" unique_id=1162032235]
+collision_layer = 16
+collision_mask = 4
+
+[node name="HurtboxCollision" parent="Hurtbox" index="0" unique_id=762187009]
+shape = SubResource("RectangleShape2D_hj6dr")

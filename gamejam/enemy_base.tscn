@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://fjb35qrjv5kx"]
 
+[ext_resource type="Script" uid="uid://8pt45q8tgh02" path="res://enemy_base.gd" id="1_8nqel"]
+
 [node name="EnemyBase" type="CharacterBody2D" unique_id=489289570]
+script = ExtResource("1_8nqel")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1048036837]
 
@@ -31,3 +34,5 @@
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=709994479]
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=767065414]
+
+[node name="HurtTimer" type="Timer" parent="." unique_id=1348150607]

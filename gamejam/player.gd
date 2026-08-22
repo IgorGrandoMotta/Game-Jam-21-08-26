@@ -59,13 +59,13 @@ var sprite_rest_position := Vector2.ZERO
 var hit_tween: Tween
 
 var attack_tween: Tween
-var hit_targets: Array[Area2D] = []
+var hit_targets: Array[Node] = []
 
 func _ready() -> void:
 	sword_animation.visible = false
 	current_health = max_health
 	sprite_rest_position = sprite.position
-
+	
 	configure_timers()
 
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
@@ -76,7 +76,7 @@ func _ready() -> void:
 	sword_sprite.visible = true
 	attack_collision.disabled = true
 	sprite.play("idle_side")
-
+	add_to_group("player")
 
 func configure_timers() -> void:
 	dash_timer.one_shot = true
@@ -141,12 +141,13 @@ func _physics_process(_delta: float) -> void:
 		PlayerState.ATTACKING:
 			velocity = direction * walk_speed * attack_move_multiplier
 			update_animation(direction)
+			check_sword_hits()
 			
 		PlayerState.DEAD:
 			velocity = Vector2.ZERO
 
 	move_and_slide()
-
+	check_contact_damage()
 
 func start_dash(direction: Vector2) -> void:
 	state = PlayerState.DASHING
@@ -419,20 +420,28 @@ func cancel_sword_attack() -> void:
 	hit_targets.clear()
 
 func _on_attack_area_entered(area: Area2D) -> void:
-	if state != PlayerState.ATTACKING:
-		return
+	try_sword_hit(area)
 
-	if area in hit_targets:
+
+func check_sword_hits() -> void:
+	for area in attack_area.get_overlapping_areas():
+		try_sword_hit(area)
+
+
+func try_sword_hit(area: Area2D) -> void:
+	if state != PlayerState.ATTACKING:
 		return
 
 	var target := area.get_parent()
 
-	# Impede que a espada acerte o próprio jogador.
 	if target == self:
 		return
 
+	if target in hit_targets:
+		return
+
 	if target.has_method("take_damage"):
-		hit_targets.append(area)
+		hit_targets.append(target)
 		target.take_damage(sword_damage, global_position)
 
 func update_weapon_aim() -> void:
@@ -449,4 +458,15 @@ func update_weapon_aim() -> void:
 		weapon_pivot.z_index = -1
 	else:
 		weapon_pivot.z_index = 1
-		
+
+func check_contact_damage() -> void:
+	if state == PlayerState.DEAD:
+		return
+
+	if not invulnerability_timer.is_stopped():
+		return
+
+	for area in hurtbox.get_overlapping_areas():
+		if area.has_method("get_damage"):
+			take_damage(area.get_damage())
+			break
