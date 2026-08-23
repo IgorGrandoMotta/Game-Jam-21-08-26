@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://djnh7xbpoksp6" path="res://Imagens/Sprite_porta_padded.png" id="8_lowby"]
 [ext_resource type="Texture2D" uid="uid://vxbal1dkarhd" path="res://Imagens/Sprite_porta_aberta_.png" id="9_58smv"]
 [ext_resource type="PackedScene" uid="uid://cacywb6y7srk6" path="res://health_pack.tscn" id="12_a25ih"]
+[ext_resource type="PackedScene" uid="uid://phvxsmr8hktm" path="res://watchmaker.tscn" id="13_38et7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sb12i"]
 texture = ExtResource("1_4ptq8")
@@ -124,4 +125,14 @@ visible = false
 [node name="HealthPack" parent="." unique_id=945761200 instance=ExtResource("12_a25ih")]
 light_mask = 17
 visibility_layer = 3
-position = Vector2(550, 425)
+position = Vector2(118, 426)
+
+[node name="HealthPack2" parent="." unique_id=1172595318 instance=ExtResource("12_a25ih")]
+light_mask = 17
+visibility_layer = 3
+position = Vector2(270, 427)
+cooldown_time = 4.0
+
+[node name="Watchmaker" parent="." unique_id=2055461733 instance=ExtResource("13_38et7")]
+position = Vector2(640.228, 309.25964)
+dialogue_lines = Array[String](["Fala Chefe, tudo bem?", "Deixe de ser Gay"])

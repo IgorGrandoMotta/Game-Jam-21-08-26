@@ -72,6 +72,5 @@ sprite_frames = SubResource("SpriteFrames_s6i7f")
 frame_progress = 0.84543496
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=481613316]
-visible = false
 position = Vector2(-1, -3.5)
 shape = SubResource("RectangleShape2D_ciuck")
