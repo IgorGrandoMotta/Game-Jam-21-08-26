@@ -2,10 +2,10 @@ extends Node
 
 ## Guarda o estado do Player que precisa sobreviver entre trocas de cena.
 ## Registrado como Autoload (singleton), acessível globalmente como "PlayerData".
-
+var has_maze_key: bool = false
 var current_health: int = -1  # -1 indica "ainda não inicializado"
 var max_health: int = 50
-var has_maze_key: bool = false
+
 
 ## Chame isso no _ready() do Player pra restaurar (ou inicializar) a vida.
 func load_into(player: Node) -> void:

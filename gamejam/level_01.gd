@@ -12,8 +12,13 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	PlayerData.has_maze_key = false
 	_setup_camera_limits()
+	player.z_as_relative = false
+	player.z_index = 2
 
+	wall_foreground.z_as_relative = false
+	wall_foreground.z_index = 3
 
 # Calcula os limites do mapa a partir da área usada do TileMap
 # e aplica na Camera2D que está dentro do Player.
@@ -36,7 +41,31 @@ func _setup_camera_limits() -> void:
 	camera.limit_bottom = int(map_position.y + map_size.y)
 	
 func _process(_delta: float) -> void:
+	var player_depth_y: float = depth_point.global_position.y
+
 	wall_material.set_shader_parameter(
 		"player_y",
-		depth_point.global_position.y
+		player_depth_y
 	)
+
+	update_object_depth(player_depth_y)
+	
+func update_object_depth(player_y: float) -> void:
+	for object in get_tree().get_nodes_in_group("depth_sortable"):
+		if not is_instance_valid(object):
+			continue
+
+		if not object is Node2D:
+			continue
+
+		var depth_object: Node2D = object as Node2D
+		var object_y: float = depth_object.global_position.y
+
+		# Ignora o Z do nó organizador/pai.
+		depth_object.z_as_relative = false
+
+		if object_y < player_y:
+			depth_object.z_index = 1
+		else:
+			depth_object.z_index = 4
+			

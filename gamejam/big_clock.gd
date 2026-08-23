@@ -367,3 +367,6 @@ func get_lane_move_direction(
 		return Vector2.UP
 
 	return Vector2.DOWN
+
+func play_idle_animation() -> void:
+	play_directional_animation("idle", last_direction)

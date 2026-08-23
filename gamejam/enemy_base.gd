@@ -40,6 +40,7 @@ var facing_direction := Vector2.DOWN
 var is_awake: bool = false
 
 func _ready() -> void:
+	configure_body_collision()
 	current_health = max_health
 	is_awake = not starts_sleeping
 	hurt_timer.one_shot = true
@@ -64,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		
 	if not is_awake:
 		velocity = Vector2.ZERO
-		play_animation(get_directional_animation("idle"))
+		play_idle_animation()
 		
 		if can_see_player():
 			is_awake = true
@@ -99,13 +100,13 @@ func update_chase() -> void:
 	if distance_to_player > detection_range:
 		state = EnemyState.IDLE
 		velocity = Vector2.ZERO
-		play_animation(get_directional_animation("idle"))
+		play_idle_animation()
 		return
 
 	if distance_to_player <= stop_distance:
 		state = EnemyState.IDLE
 		velocity = Vector2.ZERO
-		play_animation(get_directional_animation("idle"))
+		play_idle_animation()
 		return
 
 	state = EnemyState.CHASE
@@ -229,3 +230,17 @@ func can_see_player() -> bool:
 		return false
 
 	return result.get("collider") == target
+	
+func play_idle_animation() -> void:
+	play_animation(get_directional_animation("idle"))
+	
+func configure_body_collision() -> void:
+	# O corpo do inimigo existe na camada 7.
+	collision_layer = 0
+	set_collision_layer_value(7, true)
+
+	# Ele colide fisicamente somente com paredes.
+	collision_mask = 0
+	set_collision_mask_value(6, true)
+
+	body_collision.disabled = false

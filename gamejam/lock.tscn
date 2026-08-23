@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dcq3234jjotsa"]
+
+[ext_resource type="Texture2D" uid="uid://nlwvta6fpl61" path="res://Imagens/Itens/maze_lock.png" id="1_l5ccq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s6i7f"]
+size = Vector2(26, 32)
+
+[node name="Lock" type="Area2D" unique_id=276677622]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=908019228]
+texture = ExtResource("1_l5ccq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2126315865]
+shape = SubResource("RectangleShape2D_s6i7f")
