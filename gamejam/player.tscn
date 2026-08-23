@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bpuncy43iclbr" path="res://Imagens/PLAYER/player_idle_down.png" id="4_dw050"]
 [ext_resource type="Texture2D" uid="uid://4qwi6cpbemrt" path="res://Imagens/spr_player_dashup.png" id="4_urp6f"]
 [ext_resource type="Texture2D" uid="uid://cr6ukfcwmavli" path="res://Imagens/PLAYER/player_idle_up.png" id="5_b26j0"]
+[ext_resource type="Texture2D" uid="uid://ce7vqx0ljpotf" path="res://Imagens/spr_player_death.png" id="5_urp6f"]
 [ext_resource type="Texture2D" uid="uid://8d3dbpt2y8wf" path="res://Imagens/PLAYER/player_walk_down.png" id="7_n7ghd"]
 [ext_resource type="Texture2D" uid="uid://3558wl4k2poo" path="res://Imagens/PLAYER/player_walk_up.png" id="8_nvl01"]
 [ext_resource type="Texture2D" uid="uid://cqk7naq5s0mc2" path="res://Imagens/sword.png" id="9_b26j0"]
@@ -111,6 +112,38 @@ region = Rect2(96, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_feeoa"]
 atlas = ExtResource("4_urp6f")
+region = Rect2(112, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6nxt"]
+atlas = ExtResource("5_urp6f")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ym00c"]
+atlas = ExtResource("5_urp6f")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ee2o4"]
+atlas = ExtResource("5_urp6f")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vie4p"]
+atlas = ExtResource("5_urp6f")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0jj5r"]
+atlas = ExtResource("5_urp6f")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_77e46"]
+atlas = ExtResource("5_urp6f")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cy2ki"]
+atlas = ExtResource("5_urp6f")
+region = Rect2(96, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04cqw"]
+atlas = ExtResource("5_urp6f")
 region = Rect2(112, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qtqh7"]
@@ -351,6 +384,35 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_m6nxt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ym00c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ee2o4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vie4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0jj5r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_77e46")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cy2ki")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04cqw")
+}],
+"loop": 1,
+"name": &"death",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_qtqh7")
 }, {
 "duration": 1.0,
@@ -576,9 +638,8 @@ attack_move_multiplier = 0.5
 texture_filter = 1
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_r0du0")
-animation = &"dash_side"
-frame = 8
-frame_progress = 1.0
+animation = &"death"
+frame_progress = 0.8502455
 
 [node name="BodyCollision" type="CollisionShape2D" parent="." unique_id=1109739762]
 visible = false

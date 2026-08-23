@@ -60,6 +60,7 @@ var hit_tween: Tween
 
 var attack_tween: Tween
 var hit_targets: Array[Node] = []
+var dead_knockback_active: bool = false
 
 func _ready() -> void:
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
@@ -166,7 +167,8 @@ func _physics_process(_delta: float) -> void:
 				check_sword_hits()
 
 		PlayerState.DEAD:
-			velocity = Vector2.ZERO
+			if not dead_knockback_active:
+				velocity = Vector2.ZERO
 
 	move_and_slide()
 	check_contact_damage()
@@ -225,7 +227,7 @@ func take_damage(
 	print("Vida: ", current_health, "/", max_health)
 
 	if current_health <= 0:
-		die()
+		die(damage_source)
 		return
 
 	invulnerability_timer.start()
@@ -361,8 +363,12 @@ func update_flip(direction: Vector2) -> void:
 		sprite.flip_h = direction.x > 0
 
 
-func die() -> void:
+func die(damage_source: Vector2 = global_position) -> void:
 	cancel_sword_attack()
+
+	var was_dashing := state == PlayerState.DASHING
+	var direction_before_hit := dash_direction if was_dashing else facing_direction
+
 	state = PlayerState.DEAD
 	velocity = Vector2.ZERO
 
@@ -370,10 +376,42 @@ func die() -> void:
 	knockback_timer.stop()
 
 	hurtbox.set_deferred("monitoring", false)
-	sprite.modulate = Color(0.35, 0.35, 0.35)
+
+	if hit_tween and hit_tween.is_valid():
+		hit_tween.kill()
+
+	sprite.position = sprite_rest_position
+	sprite.rotation_degrees = 0.0
+	sprite.play("death")
+
+	var death_tween := create_tween()
+	death_tween.tween_property(
+		sprite,
+		"modulate",
+		Color(0.35, 0.35, 0.35),
+		0.6
+	)
+
+	# Aplica o empurrão do golpe fatal, mesmo já estando morto.
+	var away_from_damage := global_position - damage_source
+
+	if away_from_damage.length_squared() < 0.01:
+		away_from_damage = -direction_before_hit
+
+	knockback_direction = away_from_damage.normalized()
+	velocity = knockback_direction * knockback_speed
+	dead_knockback_active = true
+
+	var dead_knockback_timer := get_tree().create_timer(knockback_duration)
+	dead_knockback_timer.timeout.connect(_on_dead_knockback_finished)
 
 	died.emit()
 	print("O jogador morreu!")
+
+
+func _on_dead_knockback_finished() -> void:
+	dead_knockback_active = false
+	velocity = Vector2.ZERO
 	
 func play_idle_animation() -> void:
 	sprite.play(get_directional_animation_name("idle", facing_direction))
