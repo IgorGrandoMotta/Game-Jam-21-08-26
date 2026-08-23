@@ -8,7 +8,6 @@
 [ext_resource type="Shader" uid="uid://cfsskv1y40ix6" path="res://level_01.gdshader" id="5_qrmce"]
 [ext_resource type="PackedScene" uid="uid://b8i2v2okqdp56" path="res://sign.tscn" id="7_e3hfu"]
 [ext_resource type="Texture2D" uid="uid://cyoylhwmjrd44" path="res://Imagens/Base/base_labirinto.png" id="7_pl2qr"]
-[ext_resource type="PackedScene" uid="uid://6xu0033svkir" path="res://spike.tscn" id="8_pl2qr"]
 [ext_resource type="PackedScene" uid="uid://dkr54u645wfef" path="res://spike_full.tscn" id="9_rlskx"]
 [ext_resource type="PackedScene" uid="uid://chix5gnihtv3f" path="res://maze_key.tscn" id="10_yp1q4"]
 [ext_resource type="PackedScene" uid="uid://cacywb6y7srk6" path="res://health_pack.tscn" id="11_o3xv4"]
@@ -118,6 +117,7 @@ position = Vector2(11, -5)
 [node name="ExitDoor" type="Node2D" parent="." unique_id=501595613]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2012098287]
+visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2041543105]
@@ -129,22 +129,96 @@ texture = ExtResource("7_pl2qr")
 [node name="Sign" parent="." unique_id=1183338194 instance=ExtResource("7_e3hfu")]
 position = Vector2(44, 13)
 
-[node name="Spike" parent="." unique_id=1788068479 instance=ExtResource("8_pl2qr")]
-position = Vector2(11, 41)
-
 [node name="Spikes Full" type="Node2D" parent="." unique_id=102791020]
 
-[node name="SpikeFull3" parent="Spikes Full" unique_id=1790113904 instance=ExtResource("9_rlskx")]
-position = Vector2(-732, -359)
+[node name="SpikeFull" parent="Spikes Full" unique_id=1533988423 instance=ExtResource("9_rlskx")]
+position = Vector2(-774, -387)
 
 [node name="SpikeFull2" parent="Spikes Full" unique_id=735644796 instance=ExtResource("9_rlskx")]
-position = Vector2(-700, -359)
+position = Vector2(-698, -387)
 
-[node name="SpikeFull" parent="Spikes Full" unique_id=1533988423 instance=ExtResource("9_rlskx")]
-position = Vector2(-764, -359)
+[node name="SpikeFull3" parent="Spikes Full" unique_id=1790113904 instance=ExtResource("9_rlskx")]
+position = Vector2(-735, -387)
+
+[node name="SpikeFull4" parent="Spikes Full" unique_id=1788068479 instance=ExtResource("9_rlskx")]
+position = Vector2(-601, -929)
+
+[node name="SpikeFull5" parent="Spikes Full" unique_id=1265102363 instance=ExtResource("9_rlskx")]
+position = Vector2(-639, -928)
+
+[node name="SpikeFull6" parent="Spikes Full" unique_id=2044704227 instance=ExtResource("9_rlskx")]
+position = Vector2(-677, -928)
+
+[node name="SpikeFull7" parent="Spikes Full" unique_id=1066482221 instance=ExtResource("9_rlskx")]
+position = Vector2(-1839, -662)
+
+[node name="SpikeFull8" parent="Spikes Full" unique_id=1325524984 instance=ExtResource("9_rlskx")]
+position = Vector2(-1798, -662)
+
+[node name="SpikeFull9" parent="Spikes Full" unique_id=1137707837 instance=ExtResource("9_rlskx")]
+position = Vector2(-1758, -662)
+
+[node name="SpikeFull10" parent="Spikes Full" unique_id=1776568955 instance=ExtResource("9_rlskx")]
+position = Vector2(-1643, -1450)
+
+[node name="SpikeFull11" parent="Spikes Full" unique_id=1054621857 instance=ExtResource("9_rlskx")]
+position = Vector2(-1604, -1450)
+
+[node name="SpikeFull12" parent="Spikes Full" unique_id=112082415 instance=ExtResource("9_rlskx")]
+position = Vector2(-1565, -1449)
+
+[node name="SpikeFull13" parent="Spikes Full" unique_id=1899778776 instance=ExtResource("9_rlskx")]
+position = Vector2(-1352, -1763)
+
+[node name="SpikeFull14" parent="Spikes Full" unique_id=1820615356 instance=ExtResource("9_rlskx")]
+position = Vector2(-1276, -1765)
+
+[node name="SpikeFull15" parent="Spikes Full" unique_id=1716892946 instance=ExtResource("9_rlskx")]
+position = Vector2(-1314, -1763)
+
+[node name="SpikeFull16" parent="Spikes Full" unique_id=2102061027 instance=ExtResource("9_rlskx")]
+position = Vector2(-966, -2141)
+
+[node name="SpikeFull17" parent="Spikes Full" unique_id=270521919 instance=ExtResource("9_rlskx")]
+position = Vector2(-927, -2141)
+
+[node name="SpikeFull18" parent="Spikes Full" unique_id=1207721154 instance=ExtResource("9_rlskx")]
+position = Vector2(-888, -2141)
+
+[node name="SpikeFull21" parent="Spikes Full" unique_id=1480681904 instance=ExtResource("9_rlskx")]
+position = Vector2(-1417, -2496)
+
+[node name="SpikeFull22" parent="Spikes Full" unique_id=1672834464 instance=ExtResource("9_rlskx")]
+position = Vector2(-195, -2348)
+
+[node name="SpikeFull23" parent="Spikes Full" unique_id=541249787 instance=ExtResource("9_rlskx")]
+position = Vector2(-156, -2348)
+
+[node name="SpikeFull24" parent="Spikes Full" unique_id=719359448 instance=ExtResource("9_rlskx")]
+position = Vector2(-118, -2348)
+
+[node name="SpikeFull25" parent="Spikes Full" unique_id=881509408 instance=ExtResource("9_rlskx")]
+position = Vector2(-737, -1534)
 
 [node name="MazeKey" parent="." unique_id=1708975428 instance=ExtResource("10_yp1q4")]
-position = Vector2(-12, 12)
+position = Vector2(-520, -2110)
 
-[node name="HealthPack" parent="." unique_id=945761200 instance=ExtResource("11_o3xv4")]
-position = Vector2(-56, 39)
+[node name="HealthPacks" type="Node2D" parent="." unique_id=1031867627]
+
+[node name="HealthPack" parent="HealthPacks" unique_id=945761200 instance=ExtResource("11_o3xv4")]
+position = Vector2(-1383, -191)
+
+[node name="HealthPack2" parent="HealthPacks" unique_id=1887925539 instance=ExtResource("11_o3xv4")]
+position = Vector2(-1915, -1360)
+
+[node name="HealthPack3" parent="HealthPacks" unique_id=1173619453 instance=ExtResource("11_o3xv4")]
+position = Vector2(-1237, -2128)
+
+[node name="HealthPack4" parent="HealthPacks" unique_id=1015699295 instance=ExtResource("11_o3xv4")]
+position = Vector2(-1120, -2576)
+
+[node name="HealthPack5" parent="HealthPacks" unique_id=807791082 instance=ExtResource("11_o3xv4")]
+position = Vector2(-286, -1065)
+
+[node name="HealthPack6" parent="HealthPacks" unique_id=334649088 instance=ExtResource("11_o3xv4")]
+position = Vector2(-928, -982)
