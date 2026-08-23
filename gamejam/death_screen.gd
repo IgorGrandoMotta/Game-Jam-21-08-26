@@ -4,17 +4,15 @@ extends CanvasLayer
 @export_category("Fade para preto")
 @export var fade_duration: float = 1.0
 
-@export_category("Sprite de morte")
-@export var sprite_delay: float = 0.3
-@export var sprite_fade_duration: float = 0.5
-
 @export_category("Reinício")
 @export var allow_restart: bool = true
 @export var restart_delay: float = 0.5
 
 
 @onready var color_rect: ColorRect = $ColorRect
-@onready var death_sprite: TextureRect = $DeathSprite
+@onready var menu: Control = $Menu
+@onready var respawn_button: Button = $Menu/VBoxContainer/RespawnButton
+@onready var quit_button: Button = $Menu/VBoxContainer/QuitButton
 
 
 var can_restart := false
@@ -27,7 +25,12 @@ func _ready() -> void:
 
 	visible = false
 	color_rect.color = Color(0, 0, 0, 0)
-	death_sprite.modulate = Color(1, 1, 1, 0)
+
+	menu.visible = false
+	respawn_button.disabled = true
+
+	respawn_button.pressed.connect(_on_respawn_pressed)
+	quit_button.pressed.connect(_on_quit_pressed)
 
 
 # Chamada pelo Player (self.died.connect(DeathScreen.show_death_screen))
@@ -38,26 +41,32 @@ func show_death_screen() -> void:
 	var tween := create_tween()
 
 	tween.tween_property(color_rect, "color:a", 1.0, fade_duration)
-	tween.tween_interval(sprite_delay)
-	tween.tween_property(death_sprite, "modulate:a", 1.0, sprite_fade_duration)
 	tween.tween_callback(_on_death_screen_finished)
 
 
 func _on_death_screen_finished() -> void:
+	menu.visible = true
+	quit_button.grab_focus()
+
 	if allow_restart:
 		await get_tree().create_timer(restart_delay).timeout
 		can_restart = true
+		respawn_button.disabled = false
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not allow_restart or not can_restart:
+func _on_respawn_pressed() -> void:
+	if not can_restart:
 		return
 
-	if event is InputEventKey and event.pressed:
-		can_restart = false
-		visible = false
-		color_rect.color = Color(0, 0, 0, 0)
-		death_sprite.modulate = Color(1, 1, 1, 0)
+	can_restart = false
+	visible = false
+	color_rect.color = Color(0, 0, 0, 0)
+	menu.visible = false
+	respawn_button.disabled = true
 
-		get_tree().paused = false
-		get_tree().reload_current_scene()
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+
+func _on_quit_pressed() -> void:
+	get_tree().quit()

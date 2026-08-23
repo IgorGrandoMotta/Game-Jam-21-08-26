@@ -49,6 +49,7 @@ enum PlayerState {
 @onready var attack_collision: CollisionShape2D = $WeaponPivot/AttackArea/AttackCollision
 @onready var attack_cooldown_timer: Timer = $AttackCooldown
 @onready var sword_animation: AnimatedSprite2D = $WeaponPivot/SwordAnimation
+@onready var sword_sound: AudioStreamPlayer = $SwordSound
 
 signal health_changed(current_health: int, max_health: int)
 signal died
@@ -73,6 +74,9 @@ func _ready() -> void:
 	sword_animation.visible = false
 	PlayerData.load_into(self)
 	sprite_rest_position = sprite.position
+	
+	current_health = max_health
+	PlayerData.save_from(self)
 
 	if not health_changed.is_connected(HUD.update_health):
 		health_changed.connect(HUD.update_health)
@@ -412,7 +416,7 @@ func die(damage_source: Vector2 = global_position) -> void:
 	sprite.position = sprite_rest_position
 	sprite.rotation_degrees = 0.0
 	sprite.play("death")
-	death_sound.play(6.0)
+	death_sound.play(6.4)
 
 	var death_tween := create_tween()
 	death_tween.tween_property(
@@ -505,6 +509,7 @@ func start_sword_attack() -> void:
 
 	sword_animation.stop()
 	sword_animation.play("attack", animation_speed)
+	sword_sound.play()
 
 	attack_collision.set_deferred("disabled", false)
 

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://rwhgpy4fkhiu"
+path="res://.godot/imported/espada prota.wav-0a3f5c051c097a51df4808001ffb48b3.sample"
+
+[deps]
+
+source_file="res://audio/espada prota.wav"
+dest_files=["res://.godot/imported/espada prota.wav-0a3f5c051c097a51df4808001ffb48b3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

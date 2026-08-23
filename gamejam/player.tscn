@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bty25iqt1ql70" path="res://Imagens/sword_attack.png" id="10_n7ghd"]
 [ext_resource type="AudioStream" uid="uid://p0g2c0y420s7" path="res://audio/despertador 2.mp3" id="14_bwjto"]
 [ext_resource type="AudioStream" uid="uid://ctf71suvd6pc3" path="res://audio/dash.wav" id="15_606se"]
+[ext_resource type="AudioStream" uid="uid://rwhgpy4fkhiu" path="res://audio/espada prota.wav" id="16_u1c27"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ygbnx"]
 atlas = ExtResource("3_ivps1")
@@ -722,3 +723,7 @@ volume_db = -10.0
 [node name="DashSound" type="AudioStreamPlayer" parent="." unique_id=187758556]
 stream = ExtResource("15_606se")
 volume_db = -10.0
+
+[node name="SwordSound" type="AudioStreamPlayer" parent="." unique_id=1467095797]
+stream = ExtResource("16_u1c27")
+volume_db = -16.0

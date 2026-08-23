@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://bssuyqcisut8a"]
 
 [ext_resource type="Script" uid="uid://clumjcuh1x8uy" path="res://death_screen.gd" id="1_ex68u"]
-[ext_resource type="Texture2D" uid="uid://c3ny1pa1edhfu" path="res://Imagens/go_placeholder.png" id="2_6bi5g"]
 
 [node name="DeathScreen" type="CanvasLayer" unique_id=866470627]
 layer = 10
@@ -15,28 +14,52 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[node name="DeathSprite" type="TextureRect" parent="." unique_id=1814068989]
+[node name="Menu" type="Control" parent="." unique_id=812314878]
+visible = false
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_6bi5g")
-stretch_mode = 3
 
-[node name="Menu" type="Control" parent="." unique_id=812314878]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TitleLabel" type="Label" parent="Menu" unique_id=1000000001]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 80.0
+offset_bottom = 160.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 48
+text = "Your time is up."
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Menu" unique_id=783555690]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = -55.0
+offset_right = 110.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+alignment = 1
 
-[node name="RespawnButton" type="TextureButton" parent="Menu/VBoxContainer" unique_id=1641037688]
+[node name="RespawnButton" type="Button" parent="Menu/VBoxContainer" unique_id=1641037688]
+custom_minimum_size = Vector2(220, 50)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Turn Back Time"
 
-[node name="QuitButton" type="TextureButton" parent="Menu/VBoxContainer" unique_id=585176106]
+[node name="QuitButton" type="Button" parent="Menu/VBoxContainer" unique_id=585176106]
+custom_minimum_size = Vector2(220, 50)
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Exit to Menu (No Saves)"
