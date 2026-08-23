@@ -6,6 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://cvejh5kmmvsp4" path="res://Imagens/Sprite_piso_32.png" id="3_kdijb"]
 [ext_resource type="Texture2D" uid="uid://d1kf0hyf1b1yo" path="res://Imagens/Base/paredes_spr.png" id="4_iafiv"]
 [ext_resource type="Shader" uid="uid://cfsskv1y40ix6" path="res://level_01.gdshader" id="5_qrmce"]
+[ext_resource type="PackedScene" uid="uid://b8i2v2okqdp56" path="res://sign.tscn" id="7_e3hfu"]
+[ext_resource type="Texture2D" uid="uid://cyoylhwmjrd44" path="res://Imagens/Base/base_labirinto.png" id="7_pl2qr"]
+[ext_resource type="PackedScene" uid="uid://6xu0033svkir" path="res://spike.tscn" id="8_pl2qr"]
+[ext_resource type="PackedScene" uid="uid://dkr54u645wfef" path="res://spike_full.tscn" id="9_rlskx"]
+[ext_resource type="PackedScene" uid="uid://chix5gnihtv3f" path="res://maze_key.tscn" id="10_yp1q4"]
+[ext_resource type="PackedScene" uid="uid://cacywb6y7srk6" path="res://health_pack.tscn" id="11_o3xv4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dvup1"]
 texture = ExtResource("1_bri2l")
@@ -95,12 +101,6 @@ position = Vector2(2, -23)
 scale = Vector2(0.8807578, 0.93212575)
 build_mode = 1
 
-[node name="Sign" type="Area2D" parent="." unique_id=799892052]
-
-[node name="Sprite2D" type="Sprite2D" parent="Sign" unique_id=1030713255]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sign" unique_id=745743597]
-
 [node name="EnemySpawns" type="Node2D" parent="." unique_id=146258748]
 
 [node name="Spawn01" type="Marker2D" parent="EnemySpawns" unique_id=2085665844]
@@ -118,5 +118,33 @@ position = Vector2(11, -5)
 [node name="ExitDoor" type="Node2D" parent="." unique_id=501595613]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2012098287]
-visible = false
 color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2041543105]
+visible = false
+position = Vector2(-976.5, -1345)
+scale = Vector2(6.103125, 6.226852)
+texture = ExtResource("7_pl2qr")
+
+[node name="Sign" parent="." unique_id=1183338194 instance=ExtResource("7_e3hfu")]
+position = Vector2(44, 13)
+
+[node name="Spike" parent="." unique_id=1788068479 instance=ExtResource("8_pl2qr")]
+position = Vector2(11, 41)
+
+[node name="Spikes Full" type="Node2D" parent="." unique_id=102791020]
+
+[node name="SpikeFull3" parent="Spikes Full" unique_id=1790113904 instance=ExtResource("9_rlskx")]
+position = Vector2(-732, -359)
+
+[node name="SpikeFull2" parent="Spikes Full" unique_id=735644796 instance=ExtResource("9_rlskx")]
+position = Vector2(-700, -359)
+
+[node name="SpikeFull" parent="Spikes Full" unique_id=1533988423 instance=ExtResource("9_rlskx")]
+position = Vector2(-764, -359)
+
+[node name="MazeKey" parent="." unique_id=1708975428 instance=ExtResource("10_yp1q4")]
+position = Vector2(-12, 12)
+
+[node name="HealthPack" parent="." unique_id=945761200 instance=ExtResource("11_o3xv4")]
+position = Vector2(-56, 39)

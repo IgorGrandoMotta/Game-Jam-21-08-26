@@ -1,12 +1,14 @@
 [gd_scene format=3 uid="uid://6xu0033svkir"]
 
 [ext_resource type="Script" uid="uid://bhyrcugv57emb" path="res://spike.gd" id="1_8ryga"]
+[ext_resource type="Texture2D" uid="uid://bljq5xntddvaw" path="res://Imagens/Itens/spikes_01.png" id="2_7k7bx"]
 
 [node name="Spike" type="Area2D" unique_id=1788068479]
 collision_layer = 0
 script = ExtResource("1_8ryga")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1674479323]
+texture = ExtResource("2_7k7bx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=496452778]
 

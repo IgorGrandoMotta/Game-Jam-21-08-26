@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dkr54u645wfef"]
+
+[ext_resource type="PackedScene" uid="uid://6xu0033svkir" path="res://spike.tscn" id="1_mwitk"]
+[ext_resource type="Texture2D" uid="uid://cugdcsmugs521" path="res://Imagens/Itens/spikes_02.png" id="2_4ox6k"]
+
+[node name="SpikeFull" unique_id=1788068479 instance=ExtResource("1_mwitk")]
+
+[node name="Sprite2D" parent="." index="0" unique_id=1674479323]
+texture = ExtResource("2_4ox6k")

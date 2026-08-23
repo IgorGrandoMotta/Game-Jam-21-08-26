@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://b8i2v2okqdp56"]
+
+[ext_resource type="Texture2D" uid="uid://ruf7gwxybx3i" path="res://Imagens/Itens/sign_01.png" id="1_mbcot"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrmce"]
+size = Vector2(14, 12)
+
+[node name="Sign" type="Area2D" unique_id=1183338194]
+position = Vector2(20, 0)
+collision_layer = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=17951844]
+texture = ExtResource("1_mbcot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1810037990]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_qrmce")

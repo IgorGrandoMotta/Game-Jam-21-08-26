@@ -1,11 +1,13 @@
 [gd_scene format=3 uid="uid://chix5gnihtv3f"]
 
 [ext_resource type="Script" uid="uid://cri4otpyqjv0e" path="res://maze_key.gd" id="1_adkd0"]
+[ext_resource type="Texture2D" uid="uid://bbnx8ac5ha6qk" path="res://Imagens/Itens/maze_key.png" id="2_5vnwe"]
 
 [node name="MazeKey" type="Area2D" unique_id=1708975428]
 script = ExtResource("1_adkd0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1395850245]
+texture = ExtResource("2_5vnwe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=947701932]
 
