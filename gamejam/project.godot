@@ -27,6 +27,7 @@ DeathScreen="*uid://bssuyqcisut8a"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
 
 [input]
 
