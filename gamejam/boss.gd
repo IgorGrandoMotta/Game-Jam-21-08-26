@@ -15,7 +15,6 @@ signal defeated
 @export var cord_damage: int = 10
 @export var cord_spacing: float = 105.0
 @export var cord_hit_width: float = 30.0
-@export var claw_visual_scale: Vector2 = Vector2(1.5, 2.2)
 @export_file("*.png") var claw_texture_path: String = "res://Imagens/BOSS/garrasboss.png"
 
 @export_group("Projeteis")
@@ -204,7 +203,7 @@ func _attack_cords() -> void:
 		# Metade esquerda de garrasboss.png = corda vertical.
 		cord.region_rect = Rect2(0.0, 0.0, 256.0, 208.0)
 		cord.global_position = Vector2(x, player.global_position.y)
-		cord.scale = claw_visual_scale
+		cord.scale = Vector2(4.0, 6.0)
 		cord.modulate = Color(1.0, 0.18, 0.12, 0.42)
 		cord.z_index = 30
 		get_tree().current_scene.add_child(cord)
