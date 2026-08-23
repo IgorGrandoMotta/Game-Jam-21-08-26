@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://p0g2c0y420s7"
+path="res://.godot/imported/despertador 2.mp3-3466b92d15c1d785db3eb2f5e2a43ecf.mp3str"
+
+[deps]
+
+source_file="res://audio/despertador 2.mp3"
+dest_files=["res://.godot/imported/despertador 2.mp3-3466b92d15c1d785db3eb2f5e2a43ecf.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

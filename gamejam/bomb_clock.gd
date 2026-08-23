@@ -11,6 +11,9 @@ extends EnemyBase
 @export var blink_min_interval := 0.04
 @export var blink_max_interval := 0.22
 @export var explosion_lifetime := 0.5
+@export var fuse_sound: AudioStream
+@export var fuse_sound_duration := 3.0
+@export var explosion_sound: AudioStream
 
 
 @onready var explosion: Node = $Explosion
@@ -70,6 +73,7 @@ func start_fuse() -> void:
 	is_fusing = true
 	velocity = Vector2.ZERO
 	play_animation(get_directional_animation("boom"))
+	play_sound(fuse_sound, fuse_sound_duration)
 
 	fuse_timer.start()
 	start_blink()
@@ -111,12 +115,37 @@ func explode() -> void:
 	sprite.visible = false
 
 	explosion.explode()
+	play_sound(explosion_sound)
 
 	# Espera a explosão terminar (animação/dano) antes de remover o nó,
 	# já que $Explosion é filho e seria destruído junto com queue_free().
 	await get_tree().create_timer(explosion_lifetime).timeout
 
 	queue_free()
+
+
+func play_sound(stream: AudioStream, max_duration: float = 0.0) -> void:
+	if not stream:
+		return
+
+	# Cria um player avulso na cena (não filho da bomba), pra que o som
+	# continue tocando até o fim mesmo depois do queue_free() da bomba.
+	var sound := AudioStreamPlayer2D.new()
+	sound.stream = stream
+	sound.global_position = global_position
+
+	get_tree().current_scene.add_child(sound)
+	sound.play()
+
+	if max_duration > 0.0:
+		# Corta o som antes de terminar sozinho (ex: faísca muito longa).
+		get_tree().create_timer(max_duration).timeout.connect(
+			func() -> void:
+				sound.stop()
+				sound.queue_free()
+		)
+	else:
+		sound.finished.connect(sound.queue_free, CONNECT_ONE_SHOT)
 
 
 func _on_fuse_timer_timeout() -> void:
