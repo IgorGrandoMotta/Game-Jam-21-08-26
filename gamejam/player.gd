@@ -583,3 +583,18 @@ func configure_combat_layers() -> void:
 	attack_area.set_collision_mask_value(5, true)
 	attack_area.monitoring = true
 	attack_area.monitorable = true
+	
+func is_avoiding_ground_hazards() -> bool:
+	return state == PlayerState.DASHING
+	
+func restore_time(amount: int) -> void:
+	if state == PlayerState.DEAD:
+		return
+
+	var previous_health := current_health
+	current_health = mini(current_health + amount, max_health)
+
+	if current_health != previous_health:
+		health_changed.emit(current_health, max_health)
+
+	print("Tempo restaurado: ", current_health, "/", max_health)

@@ -95,7 +95,11 @@ position = Vector2(2, -23)
 scale = Vector2(0.8807578, 0.93212575)
 build_mode = 1
 
-[node name="Interactables" type="Node2D" parent="." unique_id=199971233]
+[node name="Sign" type="Area2D" parent="." unique_id=799892052]
+
+[node name="Sprite2D" type="Sprite2D" parent="Sign" unique_id=1030713255]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sign" unique_id=745743597]
 
 [node name="EnemySpawns" type="Node2D" parent="." unique_id=146258748]
 
@@ -114,4 +118,5 @@ position = Vector2(11, -5)
 [node name="ExitDoor" type="Node2D" parent="." unique_id=501595613]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2012098287]
+visible = false
 color = Color(0, 0, 0, 1)
