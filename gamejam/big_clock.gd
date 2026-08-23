@@ -19,7 +19,7 @@ const TONGUE_EXTENSION := [
 @export_category("Linguada")
 @export var attack_range := 100.0
 @export var attack_cooldown_time := 1.2
-@export var tongue_damage: int = 1
+@export var tongue_damage: int = 10
 @export var tongue_range := 82.0
 @export var tongue_width := 20.0
 @export var hit_start_frame: int = 3

@@ -17,7 +17,7 @@ enum PlayerState {
 @export var dash_duration := 0.25
 @export var dash_cooldown := 0.55
 @export_category("Vida")
-@export var max_health: int = 5
+@export var max_health: int = 50
 @export var invulnerability_duration := 0.8
 @export_category("Knockback")
 @export var knockback_speed := 185.0

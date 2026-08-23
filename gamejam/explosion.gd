@@ -3,7 +3,7 @@ extends Area2D
 
 
 @export_category("Dano")
-@export var damage: int = 3
+@export var damage: int = 30
 @export var explosion_radius: float = 150.0:
 	set(value):
 		explosion_radius = value

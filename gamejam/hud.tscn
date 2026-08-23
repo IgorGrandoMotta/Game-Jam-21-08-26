@@ -1,56 +1,32 @@
 [gd_scene format=3 uid="uid://qu5nkyb3qx7j"]
 
+[ext_resource type="Script" uid="uid://dxqdil4r3snm3" path="res://hud.gd" id="1_640wx"]
+[ext_resource type="Texture2D" uid="uid://cy77k76b2ikke" path="res://Imagens/health_bar/Sprite_barra_de_vida_vazia_.png" id="2_a2258"]
+[ext_resource type="Texture2D" uid="uid://cc73ado4ido8l" path="res://Imagens/health_bar/Sprite_barra_de_vida_so_a_vida_.png" id="4_rftc2"]
+
 [node name="HUD" type="CanvasLayer" unique_id=1330767384]
+script = ExtResource("1_640wx")
 
-[node name="HealthHUD" type="Control" parent="." unique_id=1486071614]
+[node name="Control" type="Control" parent="." unique_id=1486071614]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ClockFrame" type="TextureRect" parent="HealthHUD" unique_id=1410481912]
+[node name="HealthBar" type="TextureProgressBar" parent="Control" unique_id=1272971012]
+custom_minimum_size = Vector2(50, 50)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 500.0
+offset_bottom = 450.0
+scale = Vector2(3, 3)
+texture_under = ExtResource("2_a2258")
+texture_progress = ExtResource("4_rftc2")
+texture_progress_offset = Vector2(17, 3)
 
-[node name="HealthBar" type="TextureProgressBar" parent="HealthHUD" unique_id=1272971012]
+[node name="HealthLabel" type="Label" parent="Control" unique_id=1347416901]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="BossHUD" type="Control" parent="." unique_id=1555803810]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="BossName" type="Label" parent="BossHUD" unique_id=1161982485]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="BossHealthBar" type="TextureProgressBar" parent="BossHUD" unique_id=1336370671]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="InteractionMess" type="Label" parent="." unique_id=2111315304]
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="DialogueBox" type="PanelContainer" parent="." unique_id=1662824670]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="DialogueText" type="Label" parent="DialogueBox" unique_id=1529730676]
-layout_mode = 2
-
-[node name="PauseMenu" type="Control" parent="." unique_id=1703600248]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="FadeScreen" type="ColorRect" parent="." unique_id=1790388778]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 81.0
+offset_top = 66.0
+offset_right = 140.0
+offset_bottom = 89.0
+horizontal_alignment = 1

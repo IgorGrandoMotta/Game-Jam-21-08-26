@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://8tgfdjv8mqwt"]
 
 [ext_resource type="Texture2D" uid="uid://rb25ehjbxr14" path="res://Imagens/chao_de_taco.png" id="1_4ptq8"]
+[ext_resource type="Script" uid="uid://c6nqxq6pki168" path="res://test_level.gd" id="1_a25ih"]
 [ext_resource type="PackedScene" uid="uid://dc4n4onfmd37e" path="res://player.tscn" id="1_gojnm"]
 [ext_resource type="Script" uid="uid://di1bd52qnamf8" path="res://damage_test.gd" id="2_1c2mv"]
 [ext_resource type="PackedScene" uid="uid://1o34a7mrecwr" path="res://BigClock.tscn" id="3_f7g2b"]
@@ -10,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bd1oviavjfkiu" path="res://skill_menu.tscn" id="8_lnbra"]
 [ext_resource type="Texture2D" uid="uid://djnh7xbpoksp6" path="res://Imagens/Sprite_porta_padded.png" id="8_lowby"]
 [ext_resource type="Texture2D" uid="uid://vxbal1dkarhd" path="res://Imagens/Sprite_porta_aberta_.png" id="9_58smv"]
+[ext_resource type="PackedScene" uid="uid://qu5nkyb3qx7j" path="res://hud.tscn" id="11_58smv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sb12i"]
 texture = ExtResource("1_4ptq8")
@@ -31,6 +33,7 @@ size = Vector2(64, 51)
 size = Vector2(80, 80)
 
 [node name="TestLevel" type="Node2D" unique_id=856062916]
+script = ExtResource("1_a25ih")
 
 [node name="TileMap" type="TileMap" parent="." unique_id=1204356802]
 tile_set = SubResource("TileSet_s6i7f")
@@ -70,6 +73,8 @@ shape = SubResource("RectangleShape2D_6f8o3")
 
 [node name="Player" parent="." unique_id=1342027530 instance=ExtResource("1_gojnm")]
 position = Vector2(320, 180)
+dash_speed = 480.0
+dash_duration = 0.25
 
 [node name="Borda" type="StaticBody2D" parent="." unique_id=618899482]
 visible = false
@@ -91,6 +96,7 @@ shape = SubResource("RectangleShape2D_vwuui")
 
 [node name="BigClock" parent="." unique_id=489289570 instance=ExtResource("3_f7g2b")]
 position = Vector2(-68, 173)
+tongue_damage = 10
 
 [node name="BoomClock" parent="." unique_id=739592306 instance=ExtResource("5_sb12i")]
 position = Vector2(659, 0)
@@ -104,3 +110,5 @@ visible = false
 
 [node name="skill_menu" parent="." unique_id=2126760346 instance=ExtResource("8_lnbra")]
 visible = false
+
+[node name="HUD" parent="." unique_id=1330767384 instance=ExtResource("11_58smv")]

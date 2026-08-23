@@ -586,6 +586,11 @@ position = Vector2(1, 18)
 shape = SubResource("RectangleShape2D_hqtel")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=718731304]
+limit_left = -280
+limit_top = -170
+limit_right = 940
+limit_bottom = 550
+position_smoothing_enabled = true
 
 [node name="WeaponPivot" type="Node2D" parent="." unique_id=239584322]
 

@@ -19,7 +19,7 @@ enum EnemyState {
 @export var max_health: int = 5
 
 @export_category("Dano")
-@export var contact_damage: int = 1
+@export var contact_damage: int = 3
 
 @export_category("Knockback")
 @export var knockback_speed := 110.0
