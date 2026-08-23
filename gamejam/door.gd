@@ -9,6 +9,7 @@ extends Area2D
 
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var door_sound: AudioStreamPlayer = $DoorSound
 @onready var entry_area: Area2D = $EntryArea
 
 # Trava a porta assim que a transição começa, pra não disparar de
@@ -23,7 +24,7 @@ func _ready() -> void:
 
 	# EntryArea é menor, bem na soleira da porta: dispara a transição.
 	entry_area.body_entered.connect(_on_entry_entered)
-
+	
 	sprite.texture = closed_texture
 
 
@@ -32,6 +33,7 @@ func _on_proximity_entered(body: Node2D) -> void:
 		return
 
 	sprite.texture = open_texture
+	door_sound.play(0.8)
 
 
 func _on_proximity_exited(body: Node2D) -> void:

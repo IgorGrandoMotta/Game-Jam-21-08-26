@@ -2,8 +2,10 @@ extends CanvasLayer
 
 ## Quantos caracteres por segundo aparecem durante o efeito de digitação
 @export var chars_per_second: float = 30.0
+@export var typing_sound: AudioStream
 
 @onready var dialogue_label: RichTextLabel = $Panel/DialogueLabel
+@onready var typing_sound_player: AudioStreamPlayer = $TypingSoundPlayer
 
 signal dialogue_closed
 
@@ -20,6 +22,14 @@ func _ready() -> void:
 	visible = false
 	dialogue_label.bbcode_enabled = true
 	set_process(false)
+	typing_sound_player.finished.connect(_on_typing_sound_finished)
+
+
+func _on_typing_sound_finished() -> void:
+	# Se o áudio de digitação for mais curto que o texto, toca de novo
+	# em loop até a digitação terminar.
+	if is_typing:
+		typing_sound_player.play()
 
 
 func _process(delta: float) -> void:
@@ -72,6 +82,10 @@ func _show_current_line() -> void:
 	set_process(true)
 	dialogue_label.visible_characters = 0
 
+	if typing_sound:
+		typing_sound_player.stream = typing_sound
+		typing_sound_player.play()
+
 
 ## Chamada quando o jogador aperta "E" com a caixa já aberta:
 ## se ainda está digitando, pula pro texto completo.
@@ -93,6 +107,7 @@ func close_dialogue() -> void:
 	lines = []
 	line_index = 0
 	set_process(false)
+	typing_sound_player.stop()
 	dialogue_closed.emit()
 
 
@@ -109,3 +124,4 @@ func _skip_typing() -> void:
 func _finish_typing() -> void:
 	is_typing = false
 	set_process(false)
+	typing_sound_player.stop()

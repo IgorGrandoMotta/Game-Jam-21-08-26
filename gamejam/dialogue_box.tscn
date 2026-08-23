@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://cm0ek3p1phh81"]
 
 [ext_resource type="Script" uid="uid://whts7n6u1axn" path="res://dialogue_box.gd" id="1_senjy"]
+[ext_resource type="AudioStream" uid="uid://b5wl8imndg06y" path="res://audio/fala.mp3" id="2_n23yb"]
 
 [node name="DialogueBox" type="CanvasLayer" unique_id=2123282814]
 script = ExtResource("1_senjy")
+typing_sound = ExtResource("2_n23yb")
 
 [node name="Panel" type="Panel" parent="." unique_id=407266123]
 anchors_preset = 12
@@ -26,3 +28,7 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
 scroll_active = false
+
+[node name="TypingSoundPlayer" type="AudioStreamPlayer" parent="." unique_id=1166982628]
+stream = ExtResource("2_n23yb")
+volume_db = -15.0

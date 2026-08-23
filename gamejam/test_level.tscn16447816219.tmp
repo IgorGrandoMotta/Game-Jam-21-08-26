@@ -12,7 +12,6 @@
 [ext_resource type="PackedScene" uid="uid://bd1oviavjfkiu" path="res://skill_menu.tscn" id="8_lnbra"]
 [ext_resource type="Texture2D" uid="uid://djnh7xbpoksp6" path="res://Imagens/Sprite_porta_padded.png" id="8_lowby"]
 [ext_resource type="Texture2D" uid="uid://vxbal1dkarhd" path="res://Imagens/Sprite_porta_aberta_.png" id="9_58smv"]
-[ext_resource type="AudioStream" uid="uid://b5uny181th26f" path="res://audio/inimigo bomb explodindo.mp3" id="11_4bgwg"]
 [ext_resource type="PackedScene" uid="uid://cacywb6y7srk6" path="res://health_pack.tscn" id="12_a25ih"]
 [ext_resource type="PackedScene" uid="uid://phvxsmr8hktm" path="res://watchmaker.tscn" id="13_38et7"]
 
@@ -49,7 +48,7 @@ layer_0/tile_data = PackedInt32Array(262141, 0, 0, 196605, 0, 0, 131069, 0, 0, 6
 [node name="door" type="Area2D" parent="." unique_id=2066808511]
 position = Vector2(-20, -2)
 script = ExtResource("7_y646j")
-target_scene = "uid://dq0s0fwid41rr"
+target_scene = "uid://c1y10v2sc0jxh"
 closed_texture = ExtResource("8_lowby")
 open_texture = ExtResource("9_58smv")
 
@@ -61,7 +60,6 @@ debug_color = Color(0.94861215, 0.14732769, 0.44364715, 0.41960785)
 
 [node name="DoorSound" type="AudioStreamPlayer" parent="door" unique_id=758542657]
 stream = ExtResource("6_b7ax5")
-volume_db = -10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="door" unique_id=1067438849]
 position = Vector2(184, -113)
@@ -121,7 +119,9 @@ collision_layer = 9
 collision_mask = 3
 speed_multiplier = 1.6
 fuse_distance = 90.0
-explosion_sound = ExtResource("11_4bgwg")
+fuse_sound = null
+fuse_sound_duration = 3.0
+explosion_sound = null
 
 [node name="DeathScreen" parent="." unique_id=866470627 instance=ExtResource("6_gbhdq")]
 visible = false

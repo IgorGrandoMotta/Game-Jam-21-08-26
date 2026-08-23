@@ -19,6 +19,9 @@ enum PlayerState {
 @export_category("Vida")
 @export var max_health: int = 50
 @export var invulnerability_duration := 0.8
+@export var health_drain_interval := 1.0
+@export var health_drain_amount: int = 1
+@export var kill_heal_amount: int = 5
 @export_category("Knockback")
 @export var knockback_speed := 185.0
 @export var knockback_duration := 0.18
@@ -34,7 +37,9 @@ enum PlayerState {
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hurtbox: Area2D = $Hurtbox
 @onready var death_sound: AudioStreamPlayer = $DeathSound
+@onready var dash_sound: AudioStreamPlayer = $DashSound
 @onready var invulnerability_timer: Timer = $InvulnerabilityTimer
+@onready var health_drain_timer: Timer = Timer.new()
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
 @onready var knockback_timer: Timer = $KnockbackTimer
@@ -75,6 +80,11 @@ func _ready() -> void:
 
 	if not died.is_connected(DeathScreen.show_death_screen):
 		died.connect(DeathScreen.show_death_screen)
+
+	health_drain_timer.wait_time = health_drain_interval
+	health_drain_timer.timeout.connect(_on_health_drain_timer_timeout)
+	add_child(health_drain_timer)
+	health_drain_timer.start()
 
 	configure_combat_layers()
 	configure_timers()
@@ -178,6 +188,7 @@ func start_dash(direction: Vector2) -> void:
 	state = PlayerState.DASHING
 	dash_direction = direction.normalized()
 	velocity = dash_direction * dash_speed
+	dash_sound.play()
 	
 	var dash_animation: StringName = get_directional_animation_name(
 	"dash",
@@ -245,6 +256,20 @@ func heal(amount: int) -> void:
 	PlayerData.save_from(self)
 
 	print("Vida: ", current_health, "/", max_health)
+
+
+func _on_health_drain_timer_timeout() -> void:
+	if state == PlayerState.DEAD:
+		return
+
+	current_health = max(current_health - health_drain_amount, 0)
+	health_changed.emit(current_health, max_health)
+	PlayerData.save_from(self)
+
+	print("Vida (drenada): ", current_health, "/", max_health)
+
+	if current_health <= 0:
+		die(global_position)
 
 func start_knockback(damage_source: Vector2) -> void:
 	cancel_sword_attack()
@@ -384,7 +409,7 @@ func die(damage_source: Vector2 = global_position) -> void:
 	sprite.position = sprite_rest_position
 	sprite.rotation_degrees = 0.0
 	sprite.play("death")
-	death_sound.play(5.8)
+	death_sound.play(6.0)
 
 	var death_tween := create_tween()
 	death_tween.tween_property(
@@ -541,6 +566,9 @@ func try_sword_hit(area: Area2D) -> void:
 	if target.has_method("take_damage"):
 		hit_targets.append(target)
 		target.take_damage(sword_damage, global_position)
+
+		if target is EnemyBase and target.state == EnemyBase.EnemyState.DEAD:
+			heal(kill_heal_amount)
 
 func update_weapon_aim() -> void:
 	var mouse_direction := get_global_mouse_position() - global_position
