@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 SceneTransition="*uid://caopt5cbacm1p"
 SkillMenu="*uid://bd1oviavjfkiu"
+HUD="*uid://qu5nkyb3qx7j"
 
 [display]
 

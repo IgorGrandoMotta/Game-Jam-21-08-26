@@ -224,6 +224,16 @@ func take_damage(
 	start_knockback(damage_source)
 	play_hit_effect()
 
+
+func heal(amount: int) -> void:
+	if state == PlayerState.DEAD:
+		return
+
+	current_health = min(current_health + amount, max_health)
+	health_changed.emit(current_health, max_health)
+
+	print("Vida: ", current_health, "/", max_health)
+
 func start_knockback(damage_source: Vector2) -> void:
 	cancel_sword_attack()
 
