@@ -351,7 +351,7 @@ collision_layer = 0
 script = ExtResource("17_o25yy")
 next_scene = "uid://kyg2ur4ej3yq"
 
-[node name="Lock" parent="ExitDoor" unique_id=276677622 instance=ExtResource("18_o25yy")]
+[node name="LockSprite" parent="ExitDoor" unique_id=276677622 instance=ExtResource("18_o25yy")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDoor" unique_id=1550372337]
 shape = SubResource("RectangleShape2D_vwuui")
@@ -363,6 +363,7 @@ position = Vector2(0, 1)
 position = Vector2(11, -5)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=2012098287]
+visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2041543105]

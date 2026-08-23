@@ -81,12 +81,14 @@ func _on_boss_defeated() -> void:
 	add_child(layer)
 
 	var victory := Label.new()
-	victory.text = "VOCE DERROTOU O CUCKOO!"
+	victory.text = "You Defeated Cuckoo!"
 	victory.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	victory.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	victory.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	victory.add_theme_font_size_override("font_size", 28)
 	layer.add_child(victory)
+	var tween = create_tween()
+	tween.tween_callback(get_tree().quit)
 
 	# Se voces ja tiverem uma cena de creditos com este nome, entra nela.
 	await get_tree().create_timer(3.0).timeout

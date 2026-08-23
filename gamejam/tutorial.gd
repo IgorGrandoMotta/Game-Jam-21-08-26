@@ -16,9 +16,12 @@ extends CanvasLayer
 	$TutorialInimigo,
 	$TutorialInimigo,
 	$TutorialInimigo,
+	$TutorialInimigo,
+	$TutorialInimigo,
 	$TutorialPlayer,
 	$TutorialPlayer,
-	$TutorialPlayer,
+	$TutorialAction,
+	$TutorialAction,
 	$TutorialAction,
 	$TutorialAction
 ]

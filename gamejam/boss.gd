@@ -114,10 +114,11 @@ func _configure_collisions() -> void:
 	if hurtbox_collision.shape == null:
 		var hurt_shape := RectangleShape2D.new()
 		hurt_shape.size = Vector2(
-			maxf(70.0, visual_size.x * 0.62),
-			maxf(80.0, visual_size.y * 0.66)
+			maxf(10.0, visual_size.x * 0.20),
+			maxf(10.0, visual_size.y * 0.25)
 		)
 		hurtbox_collision.shape = hurt_shape
+		hurtbox_collision.position = Vector2(0.0, -visual_size.y * 0.45)
 
 
 func _add_cuco_loop_animation() -> void:

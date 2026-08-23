@@ -3,7 +3,7 @@ extends Area2D
 @export_file("*.tscn")
 var next_scene: String = "res://level_02.tscn"
 
-@onready var lock_sprite: Sprite2D = $LockSprite
+@onready var lock_sprite: Area2D = $LockSprite
 
 var changing_scene: bool = false
 
