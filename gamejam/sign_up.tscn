@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cwfl2t73uixf8"]
+
+[ext_resource type="Texture2D" uid="uid://puk5imt8klpi" path="res://Imagens/Itens/sign_05.png" id="1_4u7d4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykq24"]
+size = Vector2(14, 12)
+
+[node name="SignUp" type="Area2D" unique_id=1569502056]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=161053040]
+texture = ExtResource("1_4u7d4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1835344797]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ykq24")

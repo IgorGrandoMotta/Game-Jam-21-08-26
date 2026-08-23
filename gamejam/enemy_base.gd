@@ -9,22 +9,20 @@ enum EnemyState {
 	ATTACKING,
 	DEAD
 }
-
+@export var sight_collision_mask: int = 33
+@export_category("Percepção")
+@export var starts_sleeping: bool = true
 @export_category("Movimento")
 @export var move_speed := 45.0
 @export var detection_range := 350.0
 @export var stop_distance := 58.0
-
 @export_category("Vida")
 @export var max_health: int = 5
-
 @export_category("Dano")
 @export var contact_damage: int = 3
-
 @export_category("Knockback")
 @export var knockback_speed := 110.0
 @export var knockback_duration := 0.16
-
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var body_collision: CollisionShape2D = $BodyCollision
@@ -39,11 +37,11 @@ var state: EnemyState = EnemyState.IDLE
 var target: Node2D
 var knockback_velocity := Vector2.ZERO
 var facing_direction := Vector2.DOWN
-
+var is_awake: bool = false
 
 func _ready() -> void:
 	current_health = max_health
-
+	is_awake = not starts_sleeping
 	hurt_timer.one_shot = true
 	hurt_timer.wait_time = knockback_duration
 	hurt_timer.timeout.connect(_on_hurt_timer_timeout)
@@ -63,7 +61,17 @@ func _physics_process(delta: float) -> void:
 	if not is_instance_valid(target):
 		velocity = Vector2.ZERO
 		return
-
+		
+	if not is_awake:
+		velocity = Vector2.ZERO
+		play_animation(get_directional_animation("idle"))
+		
+		if can_see_player():
+			is_awake = true
+			state = EnemyState.CHASE
+		else:
+			return
+			
 	match state:
 		EnemyState.IDLE, EnemyState.CHASE:
 			update_chase()
@@ -128,7 +136,7 @@ func get_directional_animation(prefix: String) -> StringName:
 func take_damage(amount: int, damage_source: Vector2) -> void:
 	if state == EnemyState.DEAD:
 		return
-
+	is_awake = true
 	current_health = max(current_health - amount, 0)
 	print(get_script().get_global_name(), ": ", current_health, "/", max_health)
 
@@ -193,3 +201,31 @@ func die() -> void:
 	
 func cancel_attack() -> void:
 	pass
+
+func can_see_player() -> bool:
+	if not is_instance_valid(target):
+		return false
+
+	var distance_squared := global_position.distance_squared_to(
+		target.global_position
+	)
+
+	if distance_squared > detection_range * detection_range:
+		return false
+
+	var query := PhysicsRayQueryParameters2D.create(
+		global_position,
+		target.global_position
+	)
+
+	query.collision_mask = sight_collision_mask
+	query.exclude = [get_rid()]
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+
+	var result := get_world_2d().direct_space_state.intersect_ray(query)
+
+	if result.is_empty():
+		return false
+
+	return result.get("collider") == target
