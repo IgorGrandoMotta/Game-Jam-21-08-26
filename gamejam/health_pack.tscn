@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dukf0o6ormgui" path="res://Imagens/apulheta_heal/sprite_sand.png" id="2_irjl4"]
 [ext_resource type="Texture2D" uid="uid://ggh67x5w7els" path="res://Imagens/apulheta_heal/sprite_sand2.png" id="3_p8vk6"]
 [ext_resource type="Texture2D" uid="uid://jihf40l75aoe" path="res://Imagens/apulheta_heal/time_up_spr.png" id="4_oxhgo"]
+[ext_resource type="AudioStream" uid="uid://dobr0wrvkds8c" path="res://audio/1 up.wav" id="5_p8vk6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m1top"]
 size = Vector2(33, 56)
@@ -164,3 +165,7 @@ scale = Vector2(2.0625, 1.5152026)
 sprite_frames = SubResource("SpriteFrames_riqys")
 animation = &"full"
 frame_progress = 0.68562156
+
+[node name="HealthPackSound" type="AudioStreamPlayer" parent="." unique_id=702981487]
+stream = ExtResource("5_p8vk6")
+volume_db = -10.0
