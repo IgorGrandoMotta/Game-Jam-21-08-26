@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://phvxsmr8hktm"]
 
-[ext_resource type="Script" uid="uid://8pt45q8tgh02" path="res://enemy_base.gd" id="1_mi8ul"]
 [ext_resource type="Texture2D" uid="uid://2dbgm6lj12kp" path="res://Imagens/NPC 1/relogio_spr_todos.png" id="2_4xy0a"]
+[ext_resource type="Script" uid="uid://bx1uueg82cykb" path="res://npc_dialogue.gd" id="3_4xy0a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vf2a3"]
 atlas = ExtResource("2_4xy0a")
@@ -84,7 +84,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"12",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -101,7 +101,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"3",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -118,7 +118,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"6",
-"speed": 4.0
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -135,20 +135,63 @@ animations = [{
 }],
 "loop": 1,
 "name": &"9",
-"speed": 4.0
+"speed": 8.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwuui"]
-size = Vector2(23, 30)
+size = Vector2(72, 93)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bhunq"]
+radius = 144.0
 
 [node name="Watchmaker" type="CharacterBody2D" unique_id=2055461733]
-script = ExtResource("1_mi8ul")
+script = ExtResource("3_4xy0a")
 metadata/_custom_type_script = "uid://8pt45q8tgh02"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=813944849]
+scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_s6i7f")
-animation = &"9"
+animation = &"3"
+autoplay = "3"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1413529684]
-position = Vector2(-0.5, 2)
+position = Vector2(-2, 7.5)
 shape = SubResource("RectangleShape2D_vwuui")
+
+[node name="InteractionArea" type="Area2D" parent="." unique_id=173305427]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea" unique_id=982802669]
+shape = SubResource("CircleShape2D_bhunq")
+
+[node name="InteractPrompt" type="Node2D" parent="." unique_id=1385863700]
+visible = false
+position = Vector2(50, -30)
+
+[node name="KeyBG" type="ColorRect" parent="InteractPrompt" unique_id=1489681684]
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+color = Color(0, 0, 0, 0.7)
+
+[node name="KeyLabel" type="Label" parent="InteractPrompt/KeyBG" unique_id=593437626]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+text = "E"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InteragirLabel" type="Label" parent="InteractPrompt" unique_id=186711083]
+offset_left = 20.0
+offset_top = -12.0
+offset_right = 140.0
+offset_bottom = 12.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 16
+text = "Interagir"
+vertical_alignment = 1
