@@ -1,17 +1,61 @@
 [gd_scene format=3 uid="uid://b8i2v2okqdp56"]
 
-[ext_resource type="Texture2D" uid="uid://ruf7gwxybx3i" path="res://Imagens/Itens/sign_01.png" id="1_mbcot"]
+[ext_resource type="Texture2D" uid="uid://blp75gls1qrru" path="res://Imagens/Itens/sign_03.png" id="1_q3tny"]
+[ext_resource type="Texture2D" uid="uid://dyykanqbg2vsp" path="res://Imagens/Itens/sign_02.png" id="2_tbceu"]
+[ext_resource type="Texture2D" uid="uid://puk5imt8klpi" path="res://Imagens/Itens/sign_05.png" id="3_e8cgb"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrmce"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mfcv5"]
+load_path = "res://.godot/imported/sign_01.png-ed7bc1517a77a9ccbee824f5e3f9b9ba.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykq24"]
 size = Vector2(14, 12)
 
-[node name="Sign" type="Area2D" unique_id=1183338194]
-position = Vector2(20, 0)
-collision_layer = 0
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n067w"]
+load_path = "res://.godot/imported/sign_04.png-3f6570f50fdf68d01bb5b24957dc4a3a.ctex"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=17951844]
-texture = ExtResource("1_mbcot")
+[node name="Signs" type="Node2D" unique_id=1066316270]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1810037990]
+[node name="SignAlert" type="Area2D" parent="." unique_id=1249697526]
+
+[node name="Sprite2D" type="Sprite2D" parent="SignAlert" unique_id=1444111315]
+texture = SubResource("CompressedTexture2D_mfcv5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SignAlert" unique_id=1104957249]
 position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_qrmce")
+shape = SubResource("RectangleShape2D_ykq24")
+
+[node name="SignLeft" type="Area2D" parent="." unique_id=1535972059]
+
+[node name="Sprite2D" type="Sprite2D" parent="SignLeft" unique_id=186121747]
+texture = SubResource("CompressedTexture2D_n067w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SignLeft" unique_id=1136401340]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ykq24")
+
+[node name="SignRight" type="Area2D" parent="." unique_id=72598226]
+
+[node name="Sprite2D" type="Sprite2D" parent="SignRight" unique_id=967992868]
+texture = ExtResource("1_q3tny")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SignRight" unique_id=1376891827]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ykq24")
+
+[node name="SignDown" type="Area2D" parent="." unique_id=1526178328]
+
+[node name="Sprite2D" type="Sprite2D" parent="SignDown" unique_id=792813764]
+texture = ExtResource("2_tbceu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SignDown" unique_id=1280891284]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ykq24")
+
+[node name="SignUp" type="Area2D" parent="." unique_id=1838410473]
+
+[node name="Sprite2D" type="Sprite2D" parent="SignUp" unique_id=808646716]
+texture = ExtResource("3_e8cgb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SignUp" unique_id=782720958]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ykq24")

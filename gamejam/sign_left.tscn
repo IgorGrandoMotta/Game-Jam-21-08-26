@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dn1i41pxrm31d"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n067w"]
+load_path = "res://.godot/imported/sign_04.png-3f6570f50fdf68d01bb5b24957dc4a3a.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykq24"]
+size = Vector2(14, 12)
+
+[node name="SignLeft" type="Area2D" unique_id=1839383954]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1135023341]
+texture = SubResource("CompressedTexture2D_n067w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=810275887]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_ykq24")

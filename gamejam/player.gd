@@ -229,7 +229,10 @@ func take_damage(
 	amount: int,
 	damage_source: Vector2
 ) -> void:
-	if state == PlayerState.DEAD:
+	if (
+		state == PlayerState.DEAD
+		or not invulnerability_timer.is_stopped()
+	):
 		return
 
 	current_health = max(current_health - amount, 0)
@@ -628,3 +631,6 @@ func restore_time(amount: int) -> void:
 		health_changed.emit(current_health, max_health)
 
 	print("Tempo restaurado: ", current_health, "/", max_health)
+
+func is_dashing() -> bool:
+	return state == PlayerState.DASHING
