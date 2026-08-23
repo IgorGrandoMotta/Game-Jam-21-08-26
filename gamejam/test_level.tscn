@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://1o34a7mrecwr" path="res://BigClock.tscn" id="3_f7g2b"]
 [ext_resource type="PackedScene" uid="uid://bb8yxhr2u2adn" path="res://BombClock.tscn" id="5_sb12i"]
 [ext_resource type="PackedScene" uid="uid://bssuyqcisut8a" path="res://death_screen.tscn" id="6_gbhdq"]
+[ext_resource type="Script" uid="uid://cofh0ixdog2yx" path="res://door.gd" id="7_y646j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sb12i"]
 texture = ExtResource("1_4ptq8")
@@ -16,6 +17,9 @@ sources/0 = SubResource("TileSetAtlasSource_sb12i")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwuui"]
 size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhunq"]
+size = Vector2(148, 148)
 
 [node name="TestLevel" type="Node2D" unique_id=856062916]
 
@@ -31,9 +35,9 @@ position = Vector2(320, 180)
 position = Vector2(320, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Borda" unique_id=305835103]
-position = Vector2(0, 4)
+position = Vector2(-19, -15)
 build_mode = 1
-polygon = PackedVector2Array(-560, -128, -560, 512, 576, 512, 576, -128)
+polygon = PackedVector2Array(-541, -113, -541, 527, 595, 527, 595, -113)
 
 [node name="DamageTest" type="Area2D" parent="." unique_id=1854764625]
 visible = false
@@ -54,3 +58,13 @@ collision_mask = 3
 fuse_distance = 90.0
 
 [node name="DeathScreen" parent="." unique_id=866470627 instance=ExtResource("6_gbhdq")]
+visible = false
+
+[node name="door" type="Area2D" parent="." unique_id=2066808511]
+script = ExtResource("7_y646j")
+target_scene = "uid://c1y10v2sc0jxh"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="door" unique_id=2072978323]
+position = Vector2(185, -52)
+shape = SubResource("RectangleShape2D_bhunq")
+debug_color = Color(0.94861215, 0.14732769, 0.44364715, 0.41960785)

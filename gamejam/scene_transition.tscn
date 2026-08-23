@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://caopt5cbacm1p"]
+
+[ext_resource type="Script" uid="uid://d12filituxvw1" path="res://scene_transition.gd" id="1_jiq3i"]
+
+[node name="SceneTransition" type="CanvasLayer" unique_id=1951196913]
+script = ExtResource("1_jiq3i")
+fade_duration = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1873519143]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="LoadingLabel" type="Label" parent="." unique_id=1033826838]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1
