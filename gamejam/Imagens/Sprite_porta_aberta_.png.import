@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2wcep1duiubt"
-path="res://.godot/imported/explosion.png-6d0afed533ce3819f16947e59d26d655.ctex"
+uid="uid://vxbal1dkarhd"
+path="res://.godot/imported/Sprite_porta_aberta_.png-fcf0ffb8055e0d7a52b5f67e4aa26443.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Imagens/explosion.png"
-dest_files=["res://.godot/imported/explosion.png-6d0afed533ce3819f16947e59d26d655.ctex"]
+source_file="res://Imagens/Sprite_porta_aberta_.png"
+dest_files=["res://.godot/imported/Sprite_porta_aberta_.png-fcf0ffb8055e0d7a52b5f67e4aa26443.ctex"]
 
 [params]
 

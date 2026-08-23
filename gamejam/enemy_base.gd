@@ -12,7 +12,7 @@ enum EnemyState {
 
 @export_category("Movimento")
 @export var move_speed := 45.0
-@export var detection_range := 260.0
+@export var detection_range := 350.0
 @export var stop_distance := 58.0
 
 @export_category("Vida")

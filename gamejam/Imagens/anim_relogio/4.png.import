@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2wcep1duiubt"
-path="res://.godot/imported/explosion.png-6d0afed533ce3819f16947e59d26d655.ctex"
+uid="uid://bwrreqmp7l88w"
+path="res://.godot/imported/4.png-0a669f6923d6fb8bacfa4c90d76ae275.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Imagens/explosion.png"
-dest_files=["res://.godot/imported/explosion.png-6d0afed533ce3819f16947e59d26d655.ctex"]
+source_file="res://Imagens/anim_relogio/4.png"
+dest_files=["res://.godot/imported/4.png-0a669f6923d6fb8bacfa4c90d76ae275.ctex"]
 
 [params]
 

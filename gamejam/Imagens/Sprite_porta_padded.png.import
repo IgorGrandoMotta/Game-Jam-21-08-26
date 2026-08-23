@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2wcep1duiubt"
-path="res://.godot/imported/explosion.png-6d0afed533ce3819f16947e59d26d655.ctex"
+uid="uid://djnh7xbpoksp6"
+path="res://.godot/imported/Sprite_porta_padded.png-ea1871d383b5450b5b1a95dc2a6258a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Imagens/explosion.png"
-dest_files=["res://.godot/imported/explosion.png-6d0afed533ce3819f16947e59d26d655.ctex"]
+source_file="res://Imagens/Sprite_porta_padded.png"
+dest_files=["res://.godot/imported/Sprite_porta_padded.png-ea1871d383b5450b5b1a95dc2a6258a5.ctex"]
 
 [params]
 

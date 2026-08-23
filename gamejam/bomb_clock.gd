@@ -3,7 +3,7 @@ extends EnemyBase
 
 
 @export_category("Movimento")
-@export var speed_multiplier := 1.2
+@export var speed_multiplier := 1.6
 
 @export_category("Explosão")
 @export var fuse_distance := 90.0
