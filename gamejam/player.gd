@@ -168,14 +168,27 @@ func start_dash(direction: Vector2) -> void:
 	state = PlayerState.DASHING
 	dash_direction = direction.normalized()
 	velocity = dash_direction * dash_speed
+	
+	var dash_animation: StringName = get_directional_animation_name(
+	"dash",
+	dash_direction
+	)
 
-	var dash_animation_name := get_directional_animation_name("dash", dash_direction)
-	print("Dash: direção=", dash_direction, " animação=", dash_animation_name)
-	sprite.play(dash_animation_name)
+	var frame_count := sprite.sprite_frames.get_frame_count(dash_animation)
+	var animation_fps := sprite.sprite_frames.get_animation_speed(dash_animation)
 
-	dash_timer.start()
+	# Duração normal da animação.
+	var original_duration := float(frame_count) / animation_fps
+
+	# Velocidade necessária para terminar junto com o dash.
+	var synchronized_speed := original_duration / dash_duration
+
+	sprite.stop()
+	sprite.frame = 0
+	sprite.play(dash_animation, synchronized_speed)
+
+	dash_timer.start(dash_duration)
 	dash_cooldown_timer.start()
-
 
 func _on_dash_timer_timeout() -> void:
 	if state == PlayerState.DASHING:

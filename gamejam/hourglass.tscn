@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://cx6038tngwipl"]
+
+[ext_resource type="Script" uid="uid://8pt45q8tgh02" path="res://enemy_base.gd" id="1_nngww"]
+[ext_resource type="Texture2D" uid="uid://b6hnnaiuo3ke0" path="res://Imagens/NPC 2/ampulheta-Sheet.png" id="2_mhhxk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glj6j"]
+atlas = ExtResource("2_mhhxk")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l86wt"]
+atlas = ExtResource("2_mhhxk")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_htaci"]
+atlas = ExtResource("2_mhhxk")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yoll3"]
+atlas = ExtResource("2_mhhxk")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xscsp"]
+atlas = ExtResource("2_mhhxk")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ul3aw"]
+atlas = ExtResource("2_mhhxk")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sap7m"]
+atlas = ExtResource("2_mhhxk")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_s6i7f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glj6j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l86wt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_htaci")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yoll3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xscsp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ul3aw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sap7m")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ciuck"]
+size = Vector2(36, 43)
+
+[node name="Hourglass" type="CharacterBody2D" unique_id=1600986825]
+script = ExtResource("1_nngww")
+metadata/_custom_type_script = "uid://8pt45q8tgh02"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1018216298]
+sprite_frames = SubResource("SpriteFrames_s6i7f")
+frame_progress = 0.84543496
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=481613316]
+visible = false
+position = Vector2(-1, -3.5)
+shape = SubResource("RectangleShape2D_ciuck")
