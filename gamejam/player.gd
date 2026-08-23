@@ -33,6 +33,7 @@ enum PlayerState {
 
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hurtbox: Area2D = $Hurtbox
+@onready var death_sound: AudioStreamPlayer = $DeathSound
 @onready var invulnerability_timer: Timer = $InvulnerabilityTimer
 @onready var dash_timer: Timer = $DashTimer
 @onready var dash_cooldown_timer: Timer = $DashCooldownTimer
@@ -383,6 +384,7 @@ func die(damage_source: Vector2 = global_position) -> void:
 	sprite.position = sprite_rest_position
 	sprite.rotation_degrees = 0.0
 	sprite.play("death")
+	death_sound.play(5.8)
 
 	var death_tween := create_tween()
 	death_tween.tween_property(
