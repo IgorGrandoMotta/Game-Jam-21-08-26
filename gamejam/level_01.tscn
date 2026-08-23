@@ -349,7 +349,7 @@ collision_layer = 64
 position = Vector2(-15, -1344)
 collision_layer = 0
 script = ExtResource("17_o25yy")
-next_scene = "uid://c1y10v2sc0jxh"
+next_scene = "uid://kyg2ur4ej3yq"
 
 [node name="Lock" parent="ExitDoor" unique_id=276677622 instance=ExtResource("18_o25yy")]
 

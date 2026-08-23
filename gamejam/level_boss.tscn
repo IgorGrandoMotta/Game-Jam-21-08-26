@@ -883,7 +883,7 @@ animations = [{
 }, {
 "frames": [],
 "loop": 1,
-"name": &"default",
+"name": &"attack vertical",
 "speed": 5.0
 }, {
 "frames": [{
@@ -914,11 +914,6 @@ animations = [{
 "loop": 1,
 "name": &"idle",
 "speed": 5.0
-}, {
-"frames": [],
-"loop": 1,
-"name": &"new_animation_1",
-"speed": 5.0
 }]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6mqhj"]
@@ -943,12 +938,11 @@ layer_0/tile_data = PackedInt32Array(196582, 2, 0, 262118, 2, 0, 327654, 2, 0, 3
 script = ExtResource("8_snquu")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Boss" unique_id=1994867874]
-position = Vector2(-1127, 637.00006)
+position = Vector2(-1070, 635.00006)
 scale = Vector2(3.6862786, 3.6844027)
 sprite_frames = SubResource("SpriteFrames_3xd07")
-animation = &"idle"
+animation = &"attack vertical"
 autoplay = "idle"
-frame_progress = 0.15114754
 speed_scale = 2.0
 offset = Vector2(0, 1)
 
@@ -994,7 +988,7 @@ shape = SubResource("RectangleShape2D_3xd07")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1081065535]
 
 [node name="Player" parent="." unique_id=1342027530 instance=ExtResource("2_olua4")]
-position = Vector2(-1563, 1188)
+position = Vector2(-1125, 1143)
 
 [node name="BossProjectile" type="Area2D" parent="." unique_id=1138273519]
 script = ExtResource("10_aidtb")
