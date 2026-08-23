@@ -6,8 +6,6 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	player.health_changed.connect(HUD.update_health)
-	HUD.update_health(player.current_health, player.max_health)
 	_setup_camera_limits()
 
 

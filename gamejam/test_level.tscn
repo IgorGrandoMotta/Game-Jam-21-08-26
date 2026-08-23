@@ -29,6 +29,9 @@ size = Vector2(10.666665, 5.9999995)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6f8o3"]
 size = Vector2(64, 51)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a25ih"]
+size = Vector2(34, 87)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vwuui"]
 size = Vector2(80, 80)
 
@@ -62,14 +65,22 @@ position = Vector2(184, -83)
 scale = Vector2(6, 6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door/EntryArea" unique_id=1550849526]
-position = Vector2(2.333334, 3.666667)
+position = Vector2(3.6666675, 3.7500002)
 shape = SubResource("RectangleShape2D_sn0t7")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="door" unique_id=1235643095]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="door/StaticBody2D" unique_id=463243953]
-position = Vector2(198, -104.5)
+position = Vector2(206, -104)
 shape = SubResource("RectangleShape2D_6f8o3")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="door/StaticBody2D" unique_id=1404351019]
+position = Vector2(157, -85.9375)
+shape = SubResource("RectangleShape2D_a25ih")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="door/StaticBody2D" unique_id=2009281263]
+position = Vector2(255, -86)
+shape = SubResource("RectangleShape2D_a25ih")
 
 [node name="Player" parent="." unique_id=1342027530 instance=ExtResource("1_gojnm")]
 position = Vector2(320, 180)
@@ -77,15 +88,15 @@ dash_speed = 480.0
 dash_duration = 0.25
 
 [node name="Borda" type="StaticBody2D" parent="." unique_id=618899482]
+visible = false
 position = Vector2(320, 0)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Borda" unique_id=305835103]
-position = Vector2(-21, -15)
+position = Vector2(-42, -9)
 build_mode = 1
 polygon = PackedVector2Array(-894, -159, -894, 929, 1410, 929, 1410, -159)
 
 [node name="DamageTest" type="Area2D" parent="." unique_id=1854764625]
-visible = false
 script = ExtResource("2_1c2mv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageTest" unique_id=734857556]

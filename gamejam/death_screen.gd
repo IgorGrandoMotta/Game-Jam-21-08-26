@@ -29,13 +29,10 @@ func _ready() -> void:
 	color_rect.color = Color(0, 0, 0, 0)
 	death_sprite.modulate = Color(1, 1, 1, 0)
 
-	var player := get_tree().get_first_node_in_group("player")
 
-	if player:
-		player.died.connect(_on_player_died)
-
-
-func _on_player_died() -> void:
+# Chamada pelo Player (self.died.connect(DeathScreen.show_death_screen))
+# em vez de a DeathScreen procurar o Player sozinha.
+func show_death_screen() -> void:
 	visible = true
 
 	var tween := create_tween()
@@ -57,5 +54,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if event is InputEventKey and event.pressed:
+		can_restart = false
+		visible = false
+		color_rect.color = Color(0, 0, 0, 0)
+		death_sprite.modulate = Color(1, 1, 1, 0)
+
 		get_tree().paused = false
 		get_tree().reload_current_scene()

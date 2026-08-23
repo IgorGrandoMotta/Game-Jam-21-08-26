@@ -64,9 +64,16 @@ var hit_targets: Array[Node] = []
 func _ready() -> void:
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 	sword_animation.visible = false
-	current_health = max_health
+	PlayerData.load_into(self)
 	sprite_rest_position = sprite.position
-	
+
+	if not health_changed.is_connected(HUD.update_health):
+		health_changed.connect(HUD.update_health)
+	HUD.update_health(current_health, max_health)
+
+	if not died.is_connected(DeathScreen.show_death_screen):
+		died.connect(DeathScreen.show_death_screen)
+
 	configure_combat_layers()
 	configure_timers()
 
@@ -213,6 +220,7 @@ func take_damage(
 
 	current_health = max(current_health - amount, 0)
 	health_changed.emit(current_health, max_health)
+	PlayerData.save_from(self)
 
 	print("Vida: ", current_health, "/", max_health)
 
@@ -231,6 +239,7 @@ func heal(amount: int) -> void:
 
 	current_health = min(current_health + amount, max_health)
 	health_changed.emit(current_health, max_health)
+	PlayerData.save_from(self)
 
 	print("Vida: ", current_health, "/", max_health)
 

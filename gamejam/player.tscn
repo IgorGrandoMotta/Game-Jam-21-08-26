@@ -545,7 +545,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"attack",
-"speed": 5.0
+"speed": 2.0
 }, {
 "frames": [],
 "loop": 1,
@@ -608,6 +608,7 @@ rotation = 1.5707964
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_s6i7f")
 animation = &"attack"
+frame_progress = 0.97637343
 
 [node name="AttackArea" type="Area2D" parent="WeaponPivot" unique_id=1697728474]
 collision_layer = 4
