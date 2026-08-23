@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bdtoiuybal7ip" path="res://Imagens/BOSS/idleboss.png" id="9_xjw5c"]
 [ext_resource type="Script" uid="uid://xvxy5gw4gknc" path="res://boss_projectile.gd" id="10_aidtb"]
 [ext_resource type="Script" uid="uid://cutfsqcufcmxk" path="res://boss_claw.gd" id="11_awf84"]
+[ext_resource type="PackedScene" uid="uid://cacywb6y7srk6" path="res://health_pack.tscn" id="16_aidtb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sv5is"]
 texture = ExtResource("1_ugd74")
@@ -1004,3 +1005,9 @@ script = ExtResource("11_awf84")
 
 [node name="Sprite2D" type="Sprite2D" parent="BossClaw" unique_id=1940320468]
 texture = SubResource("AtlasTexture_3xd07")
+
+[node name="HealthPack" parent="." unique_id=945761200 instance=ExtResource("16_aidtb")]
+position = Vector2(-384, 1023)
+
+[node name="HealthPack2" parent="." unique_id=162161318 instance=ExtResource("16_aidtb")]
+position = Vector2(-1728, 1012)
