@@ -1,8 +1,14 @@
+
 extends Node2D
 
 @onready var player: CharacterBody2D = $Player
 @onready var tilemap: TileMap = $Ground
 
+@onready var wall_foreground: Sprite2D = $Wall/WallForeground
+@onready var depth_point: Marker2D = $Player/DepthPoint
+@onready var wall_material: ShaderMaterial = (
+	wall_foreground.material as ShaderMaterial
+)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,3 +34,9 @@ func _setup_camera_limits() -> void:
 	camera.limit_top = int(map_position.y)
 	camera.limit_right = int(map_position.x + map_size.x)
 	camera.limit_bottom = int(map_position.y + map_size.y)
+	
+func _process(_delta: float) -> void:
+	wall_material.set_shader_parameter(
+		"player_y",
+		depth_point.global_position.y
+	)
